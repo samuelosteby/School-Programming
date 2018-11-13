@@ -1,1 +1,1 @@
-Hello. My name is bepis. I am the boopis
+Directory for all school related projects.
