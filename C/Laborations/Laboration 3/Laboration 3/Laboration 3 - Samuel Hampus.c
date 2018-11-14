@@ -1,7 +1,5 @@
 // Laboration 3 - Programmering Grundkurs
-//By
-//Hampus Tuokkola
-//Samuel Östeby
+// By Hampus Tuokkola & Samuel Östeby
 
 
 #include <stdio.h>
@@ -17,7 +15,7 @@ double calc(int operation)
 	switch (operation)
 	{
 		case 1 :
-			printf("Please input two number to add them together.\n");
+			printf("Please input two numbers to add them together.\n");
 			scanf("%lf%lf", &x, &y);
 			z = x + y;
 			printf("Answer: The sum of %lf and %lf is %lf\n", x, y, z);
@@ -25,7 +23,7 @@ double calc(int operation)
 			break;
 		
 		case 2 :
-			printf("Please input two number to subtract them.\n");
+			printf("Please input two numbers to subtract them.\n");
 			scanf("%lf%lf", &x, &y);
 			z = x - y;
 			printf("Answer: The difference of %lf and %lf is %lf\n", x, y, z);
@@ -33,7 +31,7 @@ double calc(int operation)
 			break;
 
 		case 3 :
-			printf("Please input two number to multiply them.\n");
+			printf("Please input two numbers to multiply them.\n");
 			scanf("%lf%lf", &x, &y);
 			z = x * y;
 			printf("Answer: The product of %lf and %lf is %lf\n", x, y, z);
@@ -41,7 +39,7 @@ double calc(int operation)
 			break;
 		
 		case 4 :
-			printf("Please input two number to divide them.\n");
+			printf("Please input two numbers to divide them.\n");
 			scanf("%lf%lf", &x, &y);
 			if (y == 0)
 			{
@@ -65,7 +63,7 @@ double calc(int operation)
 			break;
 
 		case 6 :
-			printf("Please input two number to raise the first number to the power of the second.\n");
+			printf("Please input two numbers to raise the first number to the power of the second.\n");
 			scanf("%lf%lf", &x, &y);
 			z = pow(x, y);
 			printf("Answer: %lf to the power of %lf is %lf\n", x, y, z);
@@ -81,7 +79,7 @@ double calc(int operation)
 			{
 				while (avg == 0)
 				{
-					printf("Cannot take the average of zero numbers, please choose another number.\n");
+					printf("Can not take the average of zero numbers, please choose a different number.\n");
 					scanf("%d", &avg);
 				}
 			}
@@ -104,7 +102,7 @@ double calc(int operation)
 			break;
 		
 	}
-}
+} // 
 
 
 int main()
