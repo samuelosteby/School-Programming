@@ -100,6 +100,10 @@ double calc(int operation)
 			printf("Goodbye.\n");
 			system("pause");
 			break;
+
+		default :
+			printf("Invalid input. Please enter a number from the list of options.");
+			break;
 		
 	}
 } // 
