@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 
-void split_text(char s[])
+void split_text(char s[]) // Replaces spaces with line breaks in a string
 {
 	int i;
 	char space = ' ';
@@ -19,7 +19,7 @@ void split_text(char s[])
 	return 0;
 }
 
-void upper_case_to_lower_case(char s[])
+void upper_case_to_lower_case(char s[]) // Converts upper case letters to lower case letters in a string
 {
 	int i;
 	for (i = 0; s[i] != '\0'; i++)
@@ -35,7 +35,7 @@ void upper_case_to_lower_case(char s[])
 	return 0;
 }
 
-void lower_case_to_upper_case(char s[])
+void lower_case_to_upper_case(char s[]) // Converts lower case letters to upper case letters in a string
 {
 	int i;
 	for (i = 0; s[i] != '\0'; i++)
@@ -51,7 +51,7 @@ void lower_case_to_upper_case(char s[])
 	return 0;
 }
 
-void remove_character(char s[], char c)
+void remove_character(char s[], char c) // Removes all entities of a character in a string
 {
 	int i, lengthofstr;
 	char newstr[100] = "";
@@ -75,17 +75,17 @@ int main()
 { 
 	int finished;
 	finished = 0;
-	while (finished == 0)
+	while (finished == 0) // Loop until finished
 	{
 		printf("Please select an option.\n 1. Split text \n 2. Upper case to lower case \n 3. Lower case to upper case \n 4. Remove a character \n 5. Add a character \n 6. Replace a character \n 7. Statistics \n 8. Exit\n");
-		int maxch = 100;
+		int maxch = 100; // Maximum amount of characters that will be included in the string
 		int option;
 		option = 0;
 		printf("\n");
-		scanf("%d", &option);
+		scanf("%d", &option); // Register user input for option
 		getchar();
 		char inputstr[100]; // The input string from the user to modify
-		switch (option)
+		switch (option) // Determine which option the user has selected
 		{
 		case 1:
 			// Splits text
