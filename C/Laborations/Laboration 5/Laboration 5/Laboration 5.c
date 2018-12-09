@@ -60,7 +60,6 @@ void remove_character(char s[], char c) // Removes all entities of a character i
 		if (s[i] != c)
 		{
 			newstr[strlen(newstr)] = s[i];
-			printf("aids");
 		}
 	}
 
