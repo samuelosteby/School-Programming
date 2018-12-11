@@ -145,7 +145,7 @@ void statistics_string(char s[]) // Count number of words, total number of chara
 
 		if ((strchr(finishlist, activechar) == NULL) && (activechar != '\n'))
 		{
-			printf("The character %c occurs %d times in the entered text.\n", activechar, charfrequency);
+			printf("The character %c occurs %d times.\n", activechar, charfrequency);
 			finishlist[strlen(finishlist)] = activechar;
 		}
 
