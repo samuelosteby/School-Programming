@@ -122,7 +122,7 @@ void statistics_string(char s[]) // Count number of words, total number of chara
 	char newstr[100] = "", activechar, finishlist[100] = "";
 	printf("\n");
 
-	for (i = 0; s[i] != '\0'; i++)
+	for (i = 0; s[i] != '\0'; i++) // Count the amount of words
 	{
 		if ((isspace(s[i])) && (isalnum(s[i+1])))
 		{
@@ -132,10 +132,10 @@ void statistics_string(char s[]) // Count number of words, total number of chara
 		newstr[strlen(newstr)] = s[i];
 	}
 
-	for (i = 0; s[i] != '\0'; i++)
+	for (i = 0; s[i] != '\0'; i++) // Count the frequency of all characters
 	{
 		activechar = s[i];
-		for (j = 0; s[j] != '\0'; j++)
+		for (j = 0; s[j] != '\0'; j++) // Go through each character and compare it to the rest of the string
 		{
 			if (s[j] == activechar)
 			{
@@ -152,7 +152,7 @@ void statistics_string(char s[]) // Count number of words, total number of chara
 		charfrequency = 0;
 	}
 
-	characters = strlen(newstr) - 1;
+	characters = strlen(newstr) - 1; // The total amount of characters
 
 	printf("\n");
 	printf("The entered text contains %d words and %d characters in total.\n\n", words, characters);
