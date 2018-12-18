@@ -69,12 +69,6 @@ void remove_character(char s[], char c) // Removes all entities of a character i
 	return 0;
 }
 
-//void add_character(char s[], char c)
-//{
-//	int i;
-//	if 
-//}
-
 
 
 int main()
@@ -122,15 +116,9 @@ int main()
 			remove_character(inputstr, replace_char);
 			break;
 		case 5:
-			//// Add a character at end of each word
-			//char add_char;
-			//printf("Enter text:\n");
-			//fgets(inputstr, maxch - 1, stdin);
-			//printf("Enter a character to add at the end of each word:\n");
-			//scanf("%c", &add_char);
-			//getchar();
-			//add_character(inputstr, add_char);
-			//break;
+			// Add a character
+			printf("Enter text:\n");
+			break;
 		case 6:
 			// Replace a character
 			printf("Enter text:\n");
