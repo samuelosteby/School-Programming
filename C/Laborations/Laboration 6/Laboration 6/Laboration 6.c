@@ -14,21 +14,47 @@ struct Student
 	char sprogram[50];
 	int age;
 	char email[50];
+
+	struct node* next;
 };
 
 struct Student AddAStudent()
 {
+	int pnumber, age;
+	char name[50] = "", gender[10] = "", sprogram[50] = "", email[50] = "";
+
 	struct Student student;
 	printf("Choose a name: \n");
-	fgets(student.name, 50, stdin);
-	student.name[strlen(student.name) - 1] = '\0';
+	fgets(name, 50, stdin);
+	name[strlen(name) - 1] = '\0';
 	printf("Choose an age: \n");
-	scanf("%d", &student.age);
+	scanf("%d", &age);
 	getchar();
 	printf("Choose a gender: \n");
-	fgets(student.gender, 10, stdin);
+	fgets(gender, 10, stdin);
 
 	return student;
+}
+
+void printstudent(struct Student *head)
+{
+	while (head != NULL) {
+		printf("");
+		printf("%d\n", head->pnumber);
+		puts(head->name);
+		printf("");
+		puts(head->gender);
+		printf("");
+		puts(head->sprogram);
+		printf("");
+		printf("%d\n", head->age);
+		printf("");
+		puts(head->email);
+		printf("");
+		head = head->next;
+		printf("\n");
+	}
+	printf("\n");
 }
 
 int fileexists(const char * filename) {
@@ -42,7 +68,7 @@ int fileexists(const char * filename) {
 
 int main()
 {
-	struct Student *students = NULL, student;
+	struct Student *students = NULL, *temp = NULL;
 	// Check if database exists. Create one if needed.
 	FILE *studentdbtest = fopen("studentdb.dat", "r");
 	if (studentdbtest == NULL)
@@ -58,28 +84,109 @@ int main()
 	FILE *studentdb = fopen("studentdb.dat", "wb+");
 	printf("Welcome to your student database. What would you like to do?\n");
 	printf("1. Add new student\n2. Modify existing student\n3. Delete student\n4. Search for student\n5. Save database\n6. Load database\n7. Exit\n");
-	int choice = 0, option = 0, toexit = 0;
+	int choice = 0, option = 0, toExit = 1;
+	long sizeOfFile = 0;
 	scanf("%d", &option);
+	getchar();
+
+	int pnumber;
+	char name[50] = "";
+	char gender[10] = "";
+	char sprogram[50] = "";
+	int age;
+	char email[50] = "";
+
 	while (choice == 0)
 	{
 		switch (option)
 		{
 			case 1: // Add
-				int complete = 0;
-				while (complete == 0)
+				while (toExit != 0)
 				{
 					printf("Press 0 to exit. Press anything else to continue.\n");
-					scanf("%d", &toexit);
-					if (toexit == 0)
+					scanf("%d", &toExit);;
+					if (toExit == 0)
 					{
-						complete = 1;
+						break;
 					}
+
 					getchar();
-					getchar();
-					student = AddAStudent();
-					fwrite(&student, sizeof(struct Student), 1, studentdb);
-					puts(student.name);
+					//fwrite(&student, sizeof(struct Student), 1, studentdb);
+					if (students == NULL)
+					{
+						students = (struct Student *) malloc(sizeof(struct Student));
+
+						printf("Input a personal number: \n");
+						scanf("%d", &pnumber);
+						getchar();
+						printf("Choose a name: \n");
+						fgets(name, 50, stdin);
+						name[strlen(name) - 1] = '\0';
+						printf("Choose a gender: \n");
+						fgets(gender, 10, stdin);
+						gender[strlen(gender) - 1] = '\0';
+						printf("Choose a program: \n");
+						fgets(sprogram, 50, stdin);
+						sprogram[strlen(sprogram) - 1] = '\0';
+						printf("Choose an age: \n");
+						scanf("%d", &age);
+						getchar();
+						printf("Choose a email: \n");
+						fgets(email, 50, stdin);
+						email[strlen(email) - 1] = '\0';
+
+						students->pnumber = pnumber;
+						strcpy(students->name, name);
+						strcpy(students->gender, gender);
+						strcpy(students->sprogram, sprogram);
+						students->age = age;
+						strcpy(students->email, email);
+
+						students->next = NULL;
+					}
+					else
+					{
+						temp = students;
+						while (temp->next != NULL)
+						{
+							temp = temp->next;
+						}
+
+						temp->next = (struct Student *) malloc(sizeof(struct Student));
+						temp = temp->next;
+
+						printf("Input a personal number: \n");
+						scanf("%d", &pnumber);
+						getchar();
+						printf("Choose a name: \n");
+						fgets(name, 50, stdin);
+						name[strlen(name) - 1] = '\0';
+						printf("Choose a gender: \n");
+						fgets(gender, 10, stdin);
+						gender[strlen(gender) - 1] = '\0';
+						printf("Choose a program: \n");
+						fgets(sprogram, 50, stdin);
+						sprogram[strlen(sprogram) - 1] = '\0';
+						printf("Choose an age: \n");
+						scanf("%d", &age);
+						getchar();
+						printf("Choose a email: \n");
+						fgets(email, 50, stdin);
+						email[strlen(email) - 1] = '\0';
+
+						temp->pnumber = pnumber;
+						strcpy(temp->name, name);
+						strcpy(temp->gender, gender);
+						strcpy(temp->sprogram, sprogram);
+						temp->age = age;
+						strcpy(temp->email, email);
+
+						temp->next = NULL;
+					}
 				}
+				printf("The list:\n");
+				printstudent(students);
+
 				choice = 1;
 				break;
 			case 2: // Modify
