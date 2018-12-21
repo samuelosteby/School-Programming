@@ -3,24 +3,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // !! EVALUATE IF NECESSARY !!
-#include <ctype.h> // !! EVALUATE IF NECESSARY !!
+#include <string.h>
+#include <ctype.h>
 
 struct Student
 {
-	int pnumber;
+	double pnumber;
 	char name[50];
 	char gender[10];
 	char sprogram[50];
 	int age;
 	char email[50];
 
-	struct node* next;
+	struct Student* next;
 };
 
 struct Student AddAStudent()
 {
-	int pnumber, age;
+	double pnumber, age;
 	char name[50] = "", gender[10] = "", sprogram[50] = "", email[50] = "";
 
 	struct Student student;
@@ -40,7 +40,7 @@ void printstudent(struct Student *head)
 {
 	while (head != NULL) {
 		printf("");
-		printf("%d\n", head->pnumber);
+		printf("%12.lf\n", head->pnumber);
 		puts(head->name);
 		printf("");
 		puts(head->gender);
@@ -55,6 +55,213 @@ void printstudent(struct Student *head)
 		printf("\n");
 	}
 	printf("\n");
+
+}
+
+void printstudentsearch(struct Student *head)
+{
+	printf("");
+	printf("%12.lf\n", head->pnumber);
+	puts(head->name);
+	printf("");
+	puts(head->gender);
+	printf("");
+	puts(head->sprogram);
+	printf("");
+	printf("%d\n", head->age);
+	printf("");
+	puts(head->email);
+	printf("");
+	printf("\n");
+	printf("\n");
+
+}
+
+struct Student *findstudent(struct Student *head, double pnumber)
+{
+	while (head != NULL)
+	{
+		if (head->pnumber == pnumber)
+		{
+			printf("");
+			break;
+		}
+
+		head = head->next;
+	}
+
+	return head;
+}
+
+struct Student *findstudentname(struct Student *head, char findstudstr[])
+{
+	int counter = 0;
+	while (head != NULL)
+	{
+		if (strcmp(head->name, findstudstr) == 0)
+		{
+			printstudentsearch(head);
+			printf("");
+			counter += 1;
+		}
+		head = head->next;
+	}
+
+	if (counter != 0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+struct Student *findstudentsprogram(struct Student *head, char findstudstr[])
+{
+	int counter = 0;
+	while (head != NULL)
+	{
+		if (strcmp(head->sprogram, findstudstr) == 0)
+		{
+			printstudentsearch(head);
+			printf("");
+			counter += 1;
+		}
+		head = head->next;
+	}
+
+	if (counter != 0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+struct Student *countstudents(struct Student *head)
+{
+	int counter = 0;
+	while (head != NULL)
+	{
+		counter++;
+		head = head->next;
+	}
+
+	return counter;
+}
+
+struct Student *countstudentsmale(struct Student *head)
+{
+	int malecounter = 0;
+	char male[10] = "male";
+
+	while (head != NULL)
+	{
+		if (strcmp(head->gender, male) == 0)
+		{
+			malecounter++;
+		}	
+		head = head->next;
+	}
+
+	return malecounter;
+}
+
+struct Student *countstudentsfemale(struct Student *head)
+{
+	int femalecounter = 0;
+	char female[10] = "female";
+
+	while (head != NULL)
+	{
+		if (strcmp(head->gender, female) == 0)
+		{
+			femalecounter++;
+		}
+		head = head->next;
+	}
+
+	return femalecounter;
+}
+
+struct Student *countaverageage(struct Student *head)
+{
+	int agesum = 0, studentcounter = 0, result = 0;
+	while (head != NULL)
+	{
+		agesum = agesum + head->age;
+		studentcounter++;
+		head = head->next;
+	}
+
+	if (studentcounter != 0)
+	{
+		result = agesum / studentcounter;
+	}
+	else
+	{
+		printf("You can't get an average age of zero students\n");
+	}
+
+	return result;
+}
+
+void deletestudent(struct Student *head, struct Student *remove)
+{
+	// When node to be deleted is head node 
+	if (head == remove)
+	{
+		if (head->next == NULL)
+		{
+			printf("There is only one node. The list can't be made empty ");
+			return;
+		}
+
+		/* Copy the data of next node to head */
+		head->pnumber = head->next->pnumber;
+		strcpy(head->name, head->next->name);
+		strcpy(head->gender, head->next->gender);
+		strcpy(head->sprogram, head->next->sprogram);
+		head->age = head->next->age;
+		strcpy(head->email, head->next->email);
+
+		// store address of next node 
+		remove = head->next;
+
+		// Remove the link of next node 
+		head->next = head->next->next;
+
+		// free memory 
+		free(remove);
+
+		return;
+	}
+
+
+	// When not first node, follow the normal deletion process 
+
+	// find the previous node 
+	struct Student *prevstud = head;
+	while (prevstud->next != NULL && prevstud->next != remove)
+		prevstud = prevstud->next;
+
+	// Check if node really exists in Linked List 
+	if (prevstud->next == NULL)
+	{
+		printf("\n Given node is not present in Linked List");
+		return;
+	}
+
+	// Remove node from Linked List 
+	prevstud->next = prevstud->next->next;
+
+	// Free memory 
+	free(remove);
+
+	return;
 }
 
 int fileexists(const char * filename) {
@@ -82,22 +289,26 @@ int main()
 		fclose(studentdbtest);
 	}
 	FILE *studentdb = fopen("studentdb.dat", "wb+");
-	printf("Welcome to your student database. What would you like to do?\n");
-	printf("1. Add new student\n2. Modify existing student\n3. Delete student\n4. Search for student\n5. Save database\n6. Load database\n7. Exit\n");
-	int choice = 0, option = 0, toExit = 1;
+	int choice = 0, option = 0, toExit = 1, smenuchoice = 0, searchresult = 0;
 	long sizeOfFile = 0;
-	scanf("%d", &option);
-	getchar();
 
-	int pnumber;
+	double pnumber;
 	char name[50] = "";
 	char gender[10] = "";
 	char sprogram[50] = "";
 	int age;
 	char email[50] = "";
 
+	char findstudstr[50] = "";
+
+	double inputnumber;
+
 	while (choice == 0)
 	{
+		printf("Welcome to your student database. What would you like to do?\n");
+		printf("1. Add new student\n2. Modify existing student\n3. Delete student\n4. Search for student\n5. Save database\n6. Load database\n7. Exit\n");
+		scanf("%d", &option);
+		getchar();
 		switch (option)
 		{
 			case 1: // Add
@@ -117,7 +328,7 @@ int main()
 						students = (struct Student *) malloc(sizeof(struct Student));
 
 						printf("Input a personal number: \n");
-						scanf("%d", &pnumber);
+						scanf("%lf", &pnumber);
 						getchar();
 						printf("Choose a name: \n");
 						fgets(name, 50, stdin);
@@ -156,7 +367,7 @@ int main()
 						temp = temp->next;
 
 						printf("Input a personal number: \n");
-						scanf("%d", &pnumber);
+						scanf("%lf", &pnumber);
 						getchar();
 						printf("Choose a name: \n");
 						fgets(name, 50, stdin);
@@ -187,13 +398,112 @@ int main()
 				printf("The list:\n");
 				printstudent(students);
 
-				choice = 1;
 				break;
 			case 2: // Modify
+				printf("Input a personal number of the student you wish to modify: \n");
+				scanf("%lf", &inputnumber);
+				struct Student *findstud = findstudent(students, inputnumber);
+				if (findstud == NULL)
+				{
+					printf("Could not find student\n");
+				}
+				else
+				{
+					printf("Input a new personal number: \n");
+					scanf("%lf", &pnumber);
+					getchar();
+					printf("Choose a new name: \n");
+					fgets(name, 50, stdin);
+					name[strlen(name) - 1] = '\0';
+					printf("Choose a new gender: \n");
+					fgets(gender, 10, stdin);
+					gender[strlen(gender) - 1] = '\0';
+					printf("Choose a new program: \n");
+					fgets(sprogram, 50, stdin);
+					sprogram[strlen(sprogram) - 1] = '\0';
+					printf("Choose a new age: \n");
+					scanf("%d", &age);
+					getchar();
+					printf("Choose a new email: \n");
+					fgets(email, 50, stdin);
+					email[strlen(email) - 1] = '\0';
+
+					findstud->pnumber = pnumber;
+					strcpy(findstud->name, name);
+					strcpy(findstud->gender, gender);
+					strcpy(findstud->sprogram, sprogram);
+					findstud->age = age;
+					strcpy(findstud->email, email);
+
+					printf("Modification complete\n");
+
+					printstudent(students);
+				}
 				break;
 			case 3: // Delete
+				printf("Input a personal number of the student you wish to delete: \n");
+				scanf("%lf", &inputnumber);
+				struct Student *finddeletestud = findstudent(students, inputnumber);
+				if (findstud == NULL)
+				{
+					printf("Could not find student\n");
+				}
+				else
+				{
+					deletestudent(students, finddeletestud);
+					printstudent(students);
+				}
 				break;
 			case 4: // Search
+				printf("Select one of these options: \n");
+				printf("1. Personal number\n2. Name\n3. Study program\n4. Statistics\n");
+				scanf("%d", &smenuchoice);
+				switch (smenuchoice)
+				{
+					case 1: // Personal number
+					{
+						printf("Input a personal number of the student(s) you wish to search for: \n");
+						scanf("%lf", &inputnumber);
+						struct Student *findstudsearchpnum = findstudent(students, inputnumber);
+						printstudent(findstudsearchpnum);
+						break;
+					}
+					case 2: // Name
+					{
+						printf("Input a name of the student(s) you wish to search for: \n");
+						getchar();
+						fgets(findstudstr, 50, stdin);
+						findstudstr[strlen(findstudstr) - 1] = '\0';
+						searchresult = findstudentname(students, findstudstr);
+						if (searchresult == 0)
+						{
+							printf("No students found\n\n");
+						}
+						break;
+					}
+					case 3: // Study program
+					{
+						printf("Input a study program of the student(s) you wish to search for: \n");
+						getchar();
+						fgets(findstudstr, 50, stdin);
+						findstudstr[strlen(findstudstr) - 1] = '\0';
+						searchresult = findstudentsprogram(students, findstudstr);
+						if (searchresult == 0)
+						{
+							printf("No students found\n\n");
+						}
+						break;
+					}
+					case 4: // Statistics
+					{
+						printf("Number of students: %d\n", countstudents(students));
+						printf("Number of male students: %d\n", countstudentsmale(students));
+						printf("Number of female students: %d\n", countstudentsfemale(students));
+						printf("Average age of all students: %d\n", countaverageage(students));
+						system("pause");
+						break;
+					}
+				}
 				break;
 			case 5: // Save
 				break;
