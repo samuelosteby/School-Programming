@@ -209,6 +209,117 @@ struct Student *countaverageage(struct Student *head)
 	return result;
 }
 
+struct Student *studyprogramstatistics(struct Student *head)
+{
+	// Initialize all variables needed
+	int malecounter = 0, femalecounter = 0, agesum = 0, ageresult = 0, totalstudents = 0, i = 0, length = 0, totalstudentsini, isinlist = 0, havecopied = 0, freespace = 0, nonblankprogram = 0;
+	char female[10] = "female";
+	char male[10] = "male";
+	totalstudentsini = countstudents(head);
+	struct Student *start = head;
+
+	char finishedlist[100][50];
+
+	// Clean array
+	for (i = 0; i < 100; i++)
+	{
+		strcpy(finishedlist[i], "");
+	}
+
+	length = sizeof(finishedlist) / sizeof(finishedlist[0]);
+
+	// Go through all students, and place programs in list
+	while (head != NULL)
+	{
+		for (i = 0; i < length; ++i)
+		{
+			if (strcmp(finishedlist[i], head->sprogram) == 0)
+			{
+				isinlist = 1;
+			}
+		}
+
+		if (isinlist == 0)
+		{
+			for (i = 0; i < length; ++i)
+			{
+				if (strcmp(finishedlist[i], "") == 0)
+				{
+					freespace = i;
+					break;
+				}
+			}
+
+			strcpy(finishedlist[freespace], head->sprogram);
+		}
+
+		isinlist = 0;
+		head = head->next;
+	}
+
+	// Print list of programs
+	printf("\n");
+	printf("List of programs: \n");
+	for (i = 0; i < length; ++i)
+	{
+		if (strcmp(finishedlist[i], "") != 0)
+		{
+			puts(finishedlist[i]);
+			nonblankprogram++;
+		}
+	}
+
+	// Reset back to first node
+
+	head = start;
+	// Check which students belong to which programs and add stats, in order of the programs
+	for (i = 0; i < nonblankprogram; i++)
+	{
+		printf("\n");
+		printf("Current program: \n");
+		puts(finishedlist[i]);
+
+		while (head != NULL)
+		{
+			if (strcmp(finishedlist[i], head->sprogram) == 0)
+			{
+				totalstudents++;
+
+				if (strcmp(female, head->gender) == 0)
+				{
+					femalecounter++;
+				}
+				else if (strcmp(male, head->gender) == 0)
+				{
+					malecounter++;
+				}
+				else
+				{
+					printf("Invalid gender, this isn't supposed to happen aaaaaaa");
+				}
+
+				agesum += head->age;
+			}
+			head = head->next;
+		}
+		ageresult = agesum / totalstudents;
+
+		printf("Number of students in program %d\n", totalstudents);
+		printf("Number of female students in program %d\n", femalecounter);
+		printf("Number of male students in program %d\n", malecounter);
+		printf("Average age of students in program %d\n", ageresult);
+
+		totalstudents = 0;
+		femalecounter = 0;
+		malecounter = 0;
+		agesum = 0;
+		ageresult = 0;
+		head = start;
+		printf("\n");
+	}
+
+}
+
 void deletestudent(struct Student *head, struct Student *remove)
 {
 	// When node to be deleted is head node 
@@ -275,6 +386,7 @@ int fileexists(const char * filename) {
 
 int main()
 {
+	printf("Welcome to your student database.\n");
 	struct Student *students = NULL, *temp = NULL;
 	// Check if database exists. Create one if needed.
 	FILE *studentdbtest = fopen("studentdb.dat", "r");
@@ -290,7 +402,7 @@ int main()
 	}
 	FILE *studentdb = fopen("studentdb.dat", "wb+");
 	int choice = 0, option = 0, toExit = 1, smenuchoice = 0, searchresult = 0;
-	long sizeOfFile = 0;
+	double sizeOfFile = 0;
 
 	double pnumber;
 	char name[50] = "";
@@ -300,12 +412,13 @@ int main()
 	char email[50] = "";
 
 	char findstudstr[50] = "";
-
+	char databasefilename[50] = "";
+	double numberofelements = 0;
 	double inputnumber;
 
 	while (choice == 0)
 	{
-		printf("Welcome to your student database. What would you like to do?\n");
+		printf("Choose an option: \n");
 		printf("1. Add new student\n2. Modify existing student\n3. Delete student\n4. Search for student\n5. Save database\n6. Load database\n7. Exit\n");
 		scanf("%d", &option);
 		getchar();
@@ -318,11 +431,11 @@ int main()
 					scanf("%d", &toExit);;
 					if (toExit == 0)
 					{
+						toExit = 1;
 						break;
 					}
 
 					getchar();
-					//fwrite(&student, sizeof(struct Student), 1, studentdb);
 					if (students == NULL)
 					{
 						students = (struct Student *) malloc(sizeof(struct Student));
@@ -397,7 +510,10 @@ int main()
 				}
 				printf("The list:\n");
 				printstudent(students);
+				system("pause");
 
+				getchar();
+				printf("\n");
 				break;
 			case 2: // Modify
 				printf("Input a personal number of the student you wish to modify: \n");
@@ -406,6 +522,7 @@ int main()
 				if (findstud == NULL)
 				{
 					printf("Could not find student\n");
+					system("pause");
 				}
 				else
 				{
@@ -436,9 +553,11 @@ int main()
 					strcpy(findstud->email, email);
 
 					printf("Modification complete\n");
+					system("pause");
 
 					printstudent(students);
 				}
+				printf("\n");
 				break;
 			case 3: // Delete
 				printf("Input a personal number of the student you wish to delete: \n");
@@ -447,12 +566,14 @@ int main()
 				if (findstud == NULL)
 				{
 					printf("Could not find student\n");
+					system("pause");
 				}
 				else
 				{
 					deletestudent(students, finddeletestud);
 					printstudent(students);
 				}
+				printf("\n");
 				break;
 			case 4: // Search
 				printf("Select one of these options: \n");
@@ -466,6 +587,7 @@ int main()
 						scanf("%lf", &inputnumber);
 						struct Student *findstudsearchpnum = findstudent(students, inputnumber);
 						printstudent(findstudsearchpnum);
+						printf("\n");
 						break;
 					}
 					case 2: // Name
@@ -478,7 +600,9 @@ int main()
 						if (searchresult == 0)
 						{
 							printf("No students found\n\n");
+							system("pause");
 						}
+						printf("\n");
 						break;
 					}
 					case 3: // Study program
@@ -491,7 +615,9 @@ int main()
 						if (searchresult == 0)
 						{
 							printf("No students found\n\n");
+							system("pause");
 						}
+						printf("\n");
 						break;
 					}
 					case 4: // Statistics
@@ -500,17 +626,28 @@ int main()
 						printf("Number of male students: %d\n", countstudentsmale(students));
 						printf("Number of female students: %d\n", countstudentsfemale(students));
 						printf("Average age of all students: %d\n", countaverageage(students));
+						studyprogramstatistics(students);
+						printf("\n");
 						system("pause");
+						printf("\n");
+						printf("\n");
 						break;
 					}
 				}
 				break;
 			case 5: // Save
+				printf("\n");
+				printf("Please enter a filename for the file that's going to hold the database: \n");
+				fgets(databasefilename, 50, stdin);
+				findstudstr[strlen(findstudstr) - 1] = '\0';
+				strcat(databasefilename, ".dat");
 				break;
 			case 6: // Load
+				printf("\n");
 				break;
 			case 7: // Exit
 				choice = 1;
+				printf("\n");
 				break;
 		}
 	}
