@@ -8,35 +8,18 @@
 
 struct Student
 {
+	//Student info
 	double pnumber;
 	char name[50];
-	char gender[10];
+	char gender[10]; // [Has to be "male" or "female"]
 	char sprogram[50];
 	int age;
 	char email[50];
 
-	struct Student* next;
+	struct Student* next; // Prepare linked list
 };
 
-struct Student AddAStudent()
-{
-	double pnumber, age;
-	char name[50] = "", gender[10] = "", sprogram[50] = "", email[50] = "";
-
-	struct Student student;
-	printf("Choose a name: \n");
-	fgets(name, 50, stdin);
-	name[strlen(name) - 1] = '\0';
-	printf("Choose an age: \n");
-	scanf("%d", &age);
-	getchar();
-	printf("Choose a gender: \n");
-	fgets(gender, 10, stdin);
-
-	return student;
-}
-
-void printstudent(struct Student *head)
+void printstudent(struct Student *head) // Print all students' info
 {
 	while (head != NULL) {
 		printf("");
@@ -58,10 +41,10 @@ void printstudent(struct Student *head)
 
 }
 
-void printstudentsearch(struct Student *head)
+void printstudentsearch(struct Student *head) // Use fitting student's info and print it
 {
 	printf("");
-	printf("%12.lf\n", head->pnumber);
+	printf("%12.lf\n", head->pnumber); // Prints 12 characters. Use exactly 12 for best result
 	puts(head->name);
 	printf("");
 	puts(head->gender);
@@ -74,10 +57,9 @@ void printstudentsearch(struct Student *head)
 	printf("");
 	printf("\n");
 	printf("\n");
-
 }
 
-struct Student *findstudent(struct Student *head, double pnumber)
+struct Student *findstudent(struct Student *head, double pnumber) // Find student through matching personal numbers
 {
 	while (head != NULL)
 	{
@@ -93,7 +75,7 @@ struct Student *findstudent(struct Student *head, double pnumber)
 	return head;
 }
 
-struct Student *findstudentname(struct Student *head, char findstudstr[])
+struct Student *findstudentname(struct Student *head, char findstudstr[]) // Find student through matching names
 {
 	int counter = 0;
 	while (head != NULL)
@@ -117,7 +99,7 @@ struct Student *findstudentname(struct Student *head, char findstudstr[])
 	}
 }
 
-struct Student *findstudentsprogram(struct Student *head, char findstudstr[])
+struct Student *findstudentsprogram(struct Student *head, char findstudstr[]) // Find student through matching study program
 {
 	int counter = 0;
 	while (head != NULL)
@@ -141,7 +123,7 @@ struct Student *findstudentsprogram(struct Student *head, char findstudstr[])
 	}
 }
 
-struct Student *countstudents(struct Student *head)
+struct Student *countstudents(struct Student *head) // Count amount of students in total
 {
 	int counter = 0;
 	while (head != NULL)
@@ -153,7 +135,7 @@ struct Student *countstudents(struct Student *head)
 	return counter;
 }
 
-struct Student *countstudentsmale(struct Student *head)
+struct Student *countstudentsmale(struct Student *head) // Count amount of male students in total
 {
 	int malecounter = 0;
 	char male[10] = "male";
@@ -170,7 +152,7 @@ struct Student *countstudentsmale(struct Student *head)
 	return malecounter;
 }
 
-struct Student *countstudentsfemale(struct Student *head)
+struct Student *countstudentsfemale(struct Student *head) // Count amount of female students in total
 {
 	int femalecounter = 0;
 	char female[10] = "female";
@@ -187,7 +169,7 @@ struct Student *countstudentsfemale(struct Student *head)
 	return femalecounter;
 }
 
-struct Student *countaverageage(struct Student *head)
+struct Student *countaverageage(struct Student *head) // Calculate average age of all students in total
 {
 	int agesum = 0, studentcounter = 0, result = 0;
 	while (head != NULL)
@@ -209,16 +191,16 @@ struct Student *countaverageage(struct Student *head)
 	return result;
 }
 
-struct Student *studyprogramstatistics(struct Student *head)
+struct Student *studyprogramstatistics(struct Student *head) // Sort through every program and list amount of students, amount of male/female students and average age
 {
 	// Initialize all variables needed
 	int malecounter = 0, femalecounter = 0, agesum = 0, ageresult = 0, totalstudents = 0, i = 0, length = 0, totalstudentsini, isinlist = 0, havecopied = 0, freespace = 0, nonblankprogram = 0;
 	char female[10] = "female";
 	char male[10] = "male";
-	totalstudentsini = countstudents(head);
-	struct Student *start = head;
+	totalstudentsini = countstudents(head); // Used later to go back to the start of the linked list
+	struct Student *start = head; // Start of the linked list
 
-	char finishedlist[100][50];
+	char finishedlist[100][50]; // List to store every finished study program | NOTE! only has a total of 100 spaces. More study programs will cause overflow.
 
 	// Clean array
 	for (i = 0; i < 100; i++)
@@ -226,31 +208,32 @@ struct Student *studyprogramstatistics(struct Student *head)
 		strcpy(finishedlist[i], "");
 	}
 
-	length = sizeof(finishedlist) / sizeof(finishedlist[0]);
+	length = sizeof(finishedlist) / sizeof(finishedlist[0]); // Amount of elements in list
 
-	// Go through all students, and place programs in list
+	// Go through all students, and place programs in list if not already in list
+	// NOTE! strcmp returns 0 if both strings are equal
 	while (head != NULL)
 	{
 		for (i = 0; i < length; ++i)
 		{
 			if (strcmp(finishedlist[i], head->sprogram) == 0)
 			{
-				isinlist = 1;
+				isinlist = 1; // Mark study program as already in the list, to avoid double entries
 			}
 		}
 
-		if (isinlist == 0)
+		if (isinlist == 0) // If study program is not in list...
 		{
 			for (i = 0; i < length; ++i)
 			{
-				if (strcmp(finishedlist[i], "") == 0)
+				if (strcmp(finishedlist[i], "") == 0) // Find a free space to avoid overwriting other study programs
 				{
 					freespace = i;
 					break;
 				}
 			}
 
-			strcpy(finishedlist[freespace], head->sprogram);
+			strcpy(finishedlist[freespace], head->sprogram); // Write study program at free spot
 		}
 
 		isinlist = 0;
@@ -269,9 +252,8 @@ struct Student *studyprogramstatistics(struct Student *head)
 		}
 	}
 
-	// Reset back to first node
+	head = start; // Reset back to first node
 
-	head = start;
 	// Check which students belong to which programs and add stats, in order of the programs
 	for (i = 0; i < nonblankprogram; i++)
 	{
@@ -285,11 +267,11 @@ struct Student *studyprogramstatistics(struct Student *head)
 			{
 				totalstudents++;
 
-				if (strcmp(female, head->gender) == 0)
+				if (strcmp(female, head->gender) == 0) // If female student...
 				{
 					femalecounter++;
 				}
-				else if (strcmp(male, head->gender) == 0)
+				else if (strcmp(male, head->gender) == 0) // If female student...
 				{
 					malecounter++;
 				}
@@ -304,6 +286,7 @@ struct Student *studyprogramstatistics(struct Student *head)
 		}
 		ageresult = agesum / totalstudents;
 
+		// Print all results and reset variables for next iteration
 		printf("Number of students in program %d\n", totalstudents);
 		printf("Number of female students in program %d\n", femalecounter);
 		printf("Number of male students in program %d\n", malecounter);
@@ -322,16 +305,16 @@ struct Student *studyprogramstatistics(struct Student *head)
 
 void deletestudent(struct Student *head, struct Student *remove)
 {
-	// When node to be deleted is head node 
+	// For when the node to be deleted is first node 
 	if (head == remove)
 	{
-		if (head->next == NULL)
+		if (head->next == NULL) // If the first node is the one and only node...
 		{
-			printf("There is only one node. The list can't be made empty ");
+			printf("There is only one node. The list can't be made empty");
 			return;
 		}
 
-		// Copy the data of next node to head
+		// Copy the data of the next node to the head
 		head->pnumber = head->next->pnumber;
 		strcpy(head->name, head->next->name);
 		strcpy(head->gender, head->next->gender);
@@ -339,37 +322,37 @@ void deletestudent(struct Student *head, struct Student *remove)
 		head->age = head->next->age;
 		strcpy(head->email, head->next->email);
 
-		// store address of next node 
+		// store the address of the next node 
 		remove = head->next;
 
-		// Remove the link of next node 
+		// Remove the link to the next node 
 		head->next = head->next->next;
 
-		// free memory 
+		// Free the memory of the deleted node
 		free(remove);
 
 		return;
 	}
 
 
-	// When not first node, follow the normal deletion process 
+	// When not the first node...
 
-	// find the previous node 
+	// Find the previous node in the list
 	struct Student *prevstud = head;
 	while (prevstud->next != NULL && prevstud->next != remove)
 		prevstud = prevstud->next;
 
-	// Check if node really exists in Linked List 
+	// Check if the node really exists
 	if (prevstud->next == NULL)
 	{
 		printf("\n Given node is not present in Linked List");
 		return;
 	}
 
-	// Remove node from Linked List 
+	// Remove node from the list
 	prevstud->next = prevstud->next->next;
 
-	// Free memory 
+	// Free the memory of the deleted node
 	free(remove);
 
 	return;
@@ -397,6 +380,7 @@ int main()
 
 	int choice = 0, option = 0, toExit = 1, smenuchoice = 0, searchresult = 0;
 
+	// Initialize student variables
 	double pnumber;
 	char name[50] = "";
 	char gender[10] = "";
@@ -404,16 +388,10 @@ int main()
 	int age;
 	char email[50] = "";
 
-	char findstudstr[50] = "";
-	char databasefilename[50] = "";
-	double numberofstudents = 0;
-	double inputnumber;
-	double sizeoffile = 0;
-	int alldataread = 0;
-	double amountofdataread = 0;
-	int timeslooped = 0;
-
-	int testdone;
+	// Initialize file reading and other variables
+	char findstudstr[50] = "", databasefilename[50] = "";
+	double sizeoffile = 0, inputnumber, amountofdataread = 0;
+	int alldataread = 0, timeslooped = 0;
 
 	while (choice == 0)
 	{
@@ -423,7 +401,7 @@ int main()
 		getchar();
 		switch (option)
 		{
-			case 1: // Add
+			case 1: // Add student
 				while (toExit != 0)
 				{
 					printf("Press 0 to exit. Press anything else to continue.\n");
@@ -435,7 +413,7 @@ int main()
 					}
 
 					getchar();
-					if (students == NULL)
+					if (students == NULL) // If it's the first student created
 					{
 						students = (struct Student *) malloc(sizeof(struct Student));
 
@@ -467,7 +445,7 @@ int main()
 
 						students->next = NULL;
 					}
-					else
+					else // If it's not the first student created
 					{
 						temp = students;
 						while (temp->next != NULL)
@@ -514,7 +492,7 @@ int main()
 				getchar();
 				printf("\n");
 				break;
-			case 2: // Modify
+			case 2: // Modify student
 				printf("Input a personal number of the student you wish to modify: \n");
 				scanf("%lf", &inputnumber);
 				struct Student *findstud = findstudent(students, inputnumber);
@@ -558,7 +536,7 @@ int main()
 				}
 				printf("\n");
 				break;
-			case 3: // Delete
+			case 3: // Delete student
 				printf("Input a personal number of the student you wish to delete: \n");
 				scanf("%lf", &inputnumber);
 				struct Student *finddeletestud = findstudent(students, inputnumber);
@@ -574,13 +552,13 @@ int main()
 				}
 				printf("\n");
 				break;
-			case 4: // Search
+			case 4: // Search for student
 				printf("Select one of these options: \n");
 				printf("1. Personal number\n2. Name\n3. Study program\n4. Statistics\n");
 				scanf("%d", &smenuchoice);
 				switch (smenuchoice)
 				{
-					case 1: // Personal number
+					case 1: // search for personal number
 					{
 						printf("Input a personal number of the student(s) you wish to search for: \n");
 						scanf("%lf", &inputnumber);
@@ -589,7 +567,7 @@ int main()
 						printf("\n");
 						break;
 					}
-					case 2: // Name
+					case 2: // Search for name
 					{
 						printf("Input a name of the student(s) you wish to search for: \n");
 						getchar();
@@ -604,7 +582,7 @@ int main()
 						printf("\n");
 						break;
 					}
-					case 3: // Study program
+					case 3: // Search for study program
 					{
 						printf("Input a study program of the student(s) you wish to search for: \n");
 						getchar();
@@ -619,7 +597,7 @@ int main()
 						printf("\n");
 						break;
 					}
-					case 4: // Statistics
+					case 4: // Statistics, both in total and of each study program
 					{
 						printf("Number of students: %d\n", countstudents(students));
 						printf("Number of male students: %d\n", countstudentsmale(students));
@@ -634,7 +612,7 @@ int main()
 					}
 				}
 				break;
-			case 5: // Save
+			case 5: // Save student database
 				printf("\n");
 				printf("Please enter a filename (no extension) for the file that's going to hold the database: \n");
 				fgets(databasefilename, 50, stdin);
@@ -643,25 +621,19 @@ int main()
 
 				FILE *studentdb = fopen(databasefilename, "wb+");
 
-				writetofile(students, studentdb);
+				writetofile(students, studentdb); // Writes the info of every student to file
 
-				if (fwrite != 0)
+				if (fwrite != 0) // If the file could be written to successfully...
 				{
 					printf("contents to file written successfully !\n");
 				}
 
+				// Calculate size of the file and move cursor back when done
 				fseek(studentdb, 0, SEEK_END);
 				sizeoffile = ftell(studentdb);
 				rewind(studentdb);
 
-				numberofstudents = sizeoffile / sizeof(struct Student);
-				testdone = fscanf(studentdb, "Samuel");
-				if (testdone == 1)
-				{
-					printf("Very nice\n");
-				}
-
-				fclose(studentdb);
+				fclose(studentdb); // End stream
 				
 				break;
 			case 6: // Load
@@ -669,10 +641,11 @@ int main()
 				printf("Please enter a filename for the file you want to load: \n");
 				fgets(databasefilename, 50, stdin);
 				databasefilename[strlen(databasefilename) - 1] = '\0';
+				strcat(databasefilename, ".dat");
 				FILE *studentfile;
 
 				studentfile = fopen(databasefilename, "rb+");
-				if (studentfile == NULL)
+				if (studentfile == NULL) // If the file couldn't be read
 				{
 					fprintf(stderr, "\nError opening file\n");
 					exit(1);
@@ -685,15 +658,15 @@ int main()
 				students = NULL;
 				temp = NULL;
 
-				while (alldataread == 0)
+				// Mimic way of adding like in the first part of the assignment, except now without user input
+				while (alldataread == 0) // While there's still data left to read...
 				{
-					if (students == NULL)
+					if (students == NULL) // If writing to the first node...
 					{
 						students = (struct Student *) malloc(sizeof(struct Student));
 
 						fread(&students->pnumber, sizeof(students->pnumber), 1, studentfile);
 						fread(students->name, sizeof(students->name), 1, studentfile);
-						//students->name[strlen(students->name)] = '\0';
 						fread(students->gender, sizeof(students->gender), 1, studentfile);
 						fread(students->sprogram, sizeof(students->sprogram), 1, studentfile);
 						fread(&students->age, sizeof(students->age), 1, studentfile);
@@ -702,7 +675,7 @@ int main()
 
 						puts(students->name);
 					}
-					else
+					else // If not writing to first node...
 					{
 						temp = students;
 						while (temp->next != NULL)
@@ -723,15 +696,19 @@ int main()
 
 						puts(temp->name);
 					}
+
+					// Calculate the amount of times looped, the amount of data read and print it together with the entirety of the filesize
 					++timeslooped;
 					amountofdataread = (sizeof(students->pnumber) + sizeof(students->name) + sizeof(students->gender) + sizeof(students->sprogram) + sizeof(students->age) + sizeof(students->email)) * timeslooped;
-					printf("%lf / %lf / %d\n\n", amountofdataread, sizeoffile);
-					if (amountofdataread == sizeoffile)
+					printf("Amount of data read: %lf / %lf\n\n", amountofdataread, sizeoffile);
+
+					if (amountofdataread == sizeoffile) // If all data was successfully read...
 					{
 						alldataread = 1;
 					}
 				}
-				fclose(studentfile);
+
+				fclose(studentfile); // Close stream
 				break;
 			case 7: // Exit
 				choice = 1;
