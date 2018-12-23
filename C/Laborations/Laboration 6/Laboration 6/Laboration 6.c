@@ -389,7 +389,7 @@ int main()
 	char email[50] = "";
 
 	// Initialize file reading and other variables
-	char findstudstr[50] = "", databasefilename[50] = "";
+	char findstudstr[50] = "", databasefilename[50] = "", acceptedoverwrite = 'c';
 	double sizeoffile = 0, inputnumber, amountofdataread = 0;
 	int alldataread = 0, timeslooped = 0;
 
@@ -562,8 +562,13 @@ int main()
 					{
 						printf("Input a personal number of the student(s) you wish to search for: \n");
 						scanf("%lf", &inputnumber);
-						struct Student *findstudsearchpnum = findstudent(students, inputnumber);
-						printstudent(findstudsearchpnum);
+						searchresult = findstudent(students, inputnumber);
+						if (searchresult == 0)
+						{
+							printf("No students found\n\n");
+							system("pause");
+						}
+						printstudent(searchresult);
 						printf("\n");
 						break;
 					}
@@ -638,7 +643,18 @@ int main()
 				break;
 			case 6: // Load
 				printf("\n");
-				printf("Please enter a filename for the file you want to load: \n");
+				printf("Warning, this will OVERWRITE everything in your current database!\n");
+				printf("Are you sure you want to continue?\nPress 'y' to continue. Press anything else to abort\n");
+
+				scanf("%c", &acceptedoverwrite);
+				getchar();
+				if (acceptedoverwrite != 'y')
+				{
+					break;
+				}
+
+				printf("");
+				printf("Please enter a filename (no extension) for the file you want to load: \n");
 				fgets(databasefilename, 50, stdin);
 				databasefilename[strlen(databasefilename) - 1] = '\0';
 				strcat(databasefilename, ".dat");
