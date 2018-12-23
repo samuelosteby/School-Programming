@@ -375,34 +375,27 @@ void deletestudent(struct Student *head, struct Student *remove)
 	return;
 }
 
-int fileexists(const char * filename) {
-	FILE *file;
-	if (file = fopen(filename, "r")) {
-		fclose(file);
-		return 1;
+struct Student *writetofile(struct Student *head, FILE *filestream)
+{
+	while (head != NULL)
+	{
+		fwrite(&head->pnumber, sizeof(struct Student), 1, filestream);
+		fwrite(head->name, sizeof(struct Student), 1, filestream);
+		fwrite(head->gender, sizeof(struct Student), 1, filestream);
+		fwrite(head->sprogram, sizeof(struct Student), 1, filestream);
+		fwrite(&head->age, sizeof(struct Student), 1, filestream);
+		fwrite(head->email, sizeof(struct Student), 1, filestream);
+
+		head = head->next;
 	}
-	return 0;
 }
 
 int main()
 {
 	printf("Welcome to your student database.\n");
-	struct Student *students = NULL, *temp = NULL;
-	// Check if database exists. Create one if needed.
-	FILE *studentdbtest = fopen("studentdb.dat", "r");
-	if (studentdbtest == NULL)
-	{
-		printf("No database exists.\n");
-		printf("Creating a student database called 'studentdb.dat'.\n");
-	}
-	else
-	{
-		printf("Database located.\n");
-		fclose(studentdbtest);
-	}
-	FILE *studentdb = fopen("studentdb.dat", "wb+");
+	struct Student *students = NULL, *temp = NULL, *filestudents = NULL;
+
 	int choice = 0, option = 0, toExit = 1, smenuchoice = 0, searchresult = 0;
-	double sizeOfFile = 0;
 
 	double pnumber;
 	char name[50] = "";
@@ -413,8 +406,14 @@ int main()
 
 	char findstudstr[50] = "";
 	char databasefilename[50] = "";
-	double numberofelements = 0;
+	double numberofstudents = 0;
 	double inputnumber;
+	double sizeoffile = 0;
+	int alldataread = 0;
+	double amountofdataread = 0;
+	int timeslooped = 0;
+
+	int testdone;
 
 	while (choice == 0)
 	{
@@ -637,13 +636,103 @@ int main()
 				break;
 			case 5: // Save
 				printf("\n");
-				printf("Please enter a filename for the file that's going to hold the database: \n");
+				printf("Please enter a filename (no extension) for the file that's going to hold the database: \n");
 				fgets(databasefilename, 50, stdin);
-				findstudstr[strlen(findstudstr) - 1] = '\0';
+				databasefilename[strlen(databasefilename) - 1] = '\0';
 				strcat(databasefilename, ".dat");
+
+				FILE *studentdb = fopen(databasefilename, "wb+");
+
+				writetofile(students, studentdb);
+
+				if (fwrite != 0)
+				{
+					printf("contents to file written successfully !\n");
+				}
+
+				fseek(studentdb, 0, SEEK_END);
+				sizeoffile = ftell(studentdb);
+				rewind(studentdb);
+
+				numberofstudents = sizeoffile / sizeof(struct Student);
+				testdone = fscanf(studentdb, "Samuel");
+				if (testdone == 1)
+				{
+					printf("Very nice\n");
+				}
+
+				fclose(studentdb);
+				
 				break;
 			case 6: // Load
 				printf("\n");
+				printf("Please enter a filename for the file you want to load: \n");
+				fgets(databasefilename, 50, stdin);
+				databasefilename[strlen(databasefilename) - 1] = '\0';
+				FILE *studentfile;
+
+				studentfile = fopen(databasefilename, "rb+");
+				if (studentfile == NULL)
+				{
+					fprintf(stderr, "\nError opening file\n");
+					exit(1);
+				}
+
+				fseek(studentfile, 0, SEEK_END);
+				sizeoffile = ftell(studentfile);
+				rewind(studentfile);
+
+				students = NULL;
+				temp = NULL;
+
+				while (alldataread == 0)
+				{
+					if (students == NULL)
+					{
+						students = (struct Student *) malloc(sizeof(struct Student));
+
+						fread(&students->pnumber, sizeof(students->pnumber), 1, studentfile);
+						fread(students->name, sizeof(students->name), 1, studentfile);
+						//students->name[strlen(students->name)] = '\0';
+						fread(students->gender, sizeof(students->gender), 1, studentfile);
+						fread(students->sprogram, sizeof(students->sprogram), 1, studentfile);
+						fread(&students->age, sizeof(students->age), 1, studentfile);
+						fread(students->email, sizeof(students->email), 1, studentfile);
+						students->next = NULL;
+
+						puts(students->name);
+					}
+					else
+					{
+						temp = students;
+						while (temp->next != NULL)
+						{
+							temp = temp->next;
+						}
+
+						temp->next = (struct Student *) malloc(sizeof(struct Student));
+						temp = temp->next;
+
+						fread(&temp->pnumber, sizeof(temp->pnumber), 1, studentfile);
+						fread(temp->name, sizeof(temp->name), 1, studentfile);
+						fread(temp->gender, sizeof(temp->gender), 1, studentfile);
+						fread(temp->sprogram, sizeof(temp->sprogram), 1, studentfile);
+						fread(&temp->age, sizeof(temp->age), 1, studentfile);
+						fread(temp->email, sizeof(temp->email), 1, studentfile);
+						temp->next = NULL;
+
+						puts(temp->name);
+					}
+					++timeslooped;
+					amountofdataread = (sizeof(students->pnumber) + sizeof(students->name) + sizeof(students->gender) + sizeof(students->sprogram) + sizeof(students->age) + sizeof(students->email)) * timeslooped;
+					printf("%lf / %lf\n\n", amountofdataread, sizeoffile);
+					break;
+					if (amountofdataread == sizeoffile)
+					{
+						alldataread = 1;
+					}
+				}
+				fclose(studentfile);
 				break;
 			case 7: // Exit
 				choice = 1;
