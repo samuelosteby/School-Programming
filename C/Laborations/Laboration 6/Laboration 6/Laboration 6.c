@@ -331,7 +331,7 @@ void deletestudent(struct Student *head, struct Student *remove)
 			return;
 		}
 
-		/* Copy the data of next node to head */
+		// Copy the data of next node to head
 		head->pnumber = head->next->pnumber;
 		strcpy(head->name, head->next->name);
 		strcpy(head->gender, head->next->gender);
@@ -379,12 +379,12 @@ struct Student *writetofile(struct Student *head, FILE *filestream)
 {
 	while (head != NULL)
 	{
-		fwrite(&head->pnumber, sizeof(struct Student), 1, filestream);
-		fwrite(head->name, sizeof(struct Student), 1, filestream);
-		fwrite(head->gender, sizeof(struct Student), 1, filestream);
-		fwrite(head->sprogram, sizeof(struct Student), 1, filestream);
-		fwrite(&head->age, sizeof(struct Student), 1, filestream);
-		fwrite(head->email, sizeof(struct Student), 1, filestream);
+		fwrite(&head->pnumber, sizeof(head->pnumber), 1, filestream);
+		fwrite(&head->name, sizeof(head->name), 1, filestream);
+		fwrite(&head->gender, sizeof(head->gender), 1, filestream);
+		fwrite(&head->sprogram, sizeof(head->sprogram), 1, filestream);
+		fwrite(&head->age, sizeof(head->age), 1, filestream);
+		fwrite(&head->email, sizeof(head->email), 1, filestream);
 
 		head = head->next;
 	}
@@ -725,8 +725,7 @@ int main()
 					}
 					++timeslooped;
 					amountofdataread = (sizeof(students->pnumber) + sizeof(students->name) + sizeof(students->gender) + sizeof(students->sprogram) + sizeof(students->age) + sizeof(students->email)) * timeslooped;
-					printf("%lf / %lf\n\n", amountofdataread, sizeoffile);
-					break;
+					printf("%lf / %lf / %d\n\n", amountofdataread, sizeoffile);
 					if (amountofdataread == sizeoffile)
 					{
 						alldataread = 1;
