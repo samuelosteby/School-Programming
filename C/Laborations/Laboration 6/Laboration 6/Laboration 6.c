@@ -66,6 +66,7 @@ struct Student *findstudent(struct Student *head, double pnumber) // Find studen
 		if (head->pnumber == pnumber)
 		{
 			printf("");
+			printstudent(head);
 			break;
 		}
 
@@ -568,7 +569,7 @@ int main()
 							printf("No students found\n\n");
 							system("pause");
 						}
-						printstudent(searchresult);
+						//printstudent(searchresult);
 						printf("\n");
 						break;
 					}
