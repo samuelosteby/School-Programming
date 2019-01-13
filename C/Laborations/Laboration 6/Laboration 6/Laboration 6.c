@@ -11,7 +11,7 @@ struct Student
 	//Student info
 	double pnumber;
 	char name[50];
-	char gender[10]; // [Has to be "male" or "female"]
+	char gender[10]; // Has to be "male" or "female"
 	char sprogram[50];
 	int age;
 	char email[50];
