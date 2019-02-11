@@ -509,6 +509,5 @@ int main()
 	readqueue();
 	readqueue();
 
-
 	system("pause");
 }
