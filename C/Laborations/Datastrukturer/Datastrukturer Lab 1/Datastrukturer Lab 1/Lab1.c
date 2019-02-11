@@ -10,7 +10,7 @@ struct Node // Node to be used in linked list
 
 int isEmpty(struct Node *L) // Returns true if list L is empty, false otherwise
 {
-	if (L == NULL)
+	if (L->next == L)
 	{
 		return 1;
 	}
@@ -18,6 +18,15 @@ int isEmpty(struct Node *L) // Returns true if list L is empty, false otherwise
 	{
 		return 0;
 	}
+}
+
+struct Node * getnewList(struct Node *L)
+{
+	L = (struct Node*)malloc(sizeof(struct Node));
+	L->key = 0;
+	L->next = L;
+	L->prev = L;
+	return L;
 }
 
 struct Node * getnewNode(int key)
@@ -30,16 +39,16 @@ struct Node * getnewNode(int key)
 	return NewNode;
 }
 
-int insert(struct Node *L, struct Node *N) // Returns true if node is added to list, false if unsuccessful. First entry returns the node itself as head
+int insert(struct Node *L, struct Node *N) // Returns true if node is added to list, false if unsuccessful
 {
 	if (isEmpty(L) == 1) // If the list is empty...
 	{
-		struct Node * NewNode = getnewNode(N->key);
-		L = NewNode;
-		return NewNode;
+		L->next = N;
+		return 1;
 	}
 	else // If the list isn't empty...
 	{
+		L = L->next;
 		while (L->next != NULL)
 		{
 			L = L->next;
@@ -62,6 +71,7 @@ struct Node * search(struct Node *L, struct Node *N)
 	}
 	else // If the list isn't empty...
 	{
+		L = L->next;
 		while (L != NULL)
 		{
 			if (L == N) // If N is found...
@@ -87,12 +97,16 @@ struct Node * delete(struct Node *L, struct Node *N)
 	{
 		return NULL; // Can't delete from empty list!
 	}
-	else if (L == N) // If the Node to be deleted is first in the list...
+	else if (L->next == N) // If the Node to be deleted is first in the list...
 	{
-		L = NULL;
+		Dummy = N;
+		free(N);
+		L->next = L;
+		return Dummy;
 	}
 	else
 	{
+		L = L->next;
 		Dummy = search(L, N);
 		if (Dummy == NULL) // If the Node isn't in the list...
 		{
@@ -119,6 +133,7 @@ struct Node * maximum(struct Node *L) // Returns the node containing the biggest
 	}
 	else
 	{
+		L = L->next;
 		i = L->key;
 		Dummy = L;
 		L = L->next;
@@ -147,6 +162,7 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 	}
 	else
 	{
+		L = L->next;
 		i = L->key;
 		Dummy = L;
 		L = L->next;
@@ -175,6 +191,7 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 	}
 	else
 	{
+		L = L->next;
 		i = N->key;
 		while (N != NULL)
 		{
@@ -200,6 +217,7 @@ struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to 
 	}
 	else
 	{
+		L = L->next;
 		i = N->key;
 		while (N != NULL)
 		{
@@ -316,28 +334,23 @@ int main()
 	printf("Exercise 1:\n");
 	// Create first list
 	struct Node * List1 = NULL;
-	struct Node * Node1_1 = NULL;
-	struct Node * Node1_2 = NULL;
-	struct Node * Node1_3 = NULL;
-	struct Node * Node1_4 = NULL;
-	struct Node * Node1_5 = NULL;
-	struct Node * Node1_6 = NULL;
+	List1 = getnewList(List1);
 
 	if (isEmpty(List1) == 1)
 	{
 		printf("List1 is empty!\n\n");
 	}
 
-	// Create the 6 nodes for List1
-	Node1_1 = getnewNode(3);
-	Node1_2 = getnewNode(1);
-	Node1_3 = getnewNode(5);
-	Node1_4 = getnewNode(10);
-	Node1_5 = getnewNode(8);
-	Node1_6 = getnewNode(7);
+	struct Node * Node1_1 = getnewNode(3);
+	struct Node * Node1_2 = getnewNode(1);
+	struct Node * Node1_3 = getnewNode(5);
+	struct Node * Node1_4 = getnewNode(10);
+	struct Node * Node1_5 = getnewNode(8);
+	struct Node * Node1_6 = getnewNode(7);
 
 	//List1 = Node1_1;
-	List1 = insert(List1, Node1_1);
+	//List1 = insert(List1, Node1_1);
+	insert(List1, Node1_1);
 	insert(List1, Node1_2);
 	insert(List1, Node1_3);
 	insert(List1, Node1_4);
@@ -346,23 +359,23 @@ int main()
 
 	// AAAAAA List 2
 	struct Node * List2 = NULL;
-	struct Node * Node2_1 = NULL;
-	struct Node * Node2_2 = NULL;
-	struct Node * Node2_3 = NULL;
-	struct Node * Node2_4 = NULL;
-	struct Node * Node2_5 = NULL;
-	struct Node * Node2_6 = NULL;
+	List2 = getnewList(List2);
 
+	if (isEmpty(List2) == 1)
+	{
+		printf("List2 is empty!\n\n");
+	}
 
-	Node2_1 = getnewNode(5);
-	Node2_2 = getnewNode(2);
-	Node2_3 = getnewNode(9);
-	Node2_4 = getnewNode(6);
-	Node2_5 = getnewNode(1);
-	Node2_6 = getnewNode(2);
+	struct Node * Node2_1 = getnewNode(5);
+	struct Node * Node2_2 = getnewNode(2);
+	struct Node * Node2_3 = getnewNode(9);
+	struct Node * Node2_4 = getnewNode(6);
+	struct Node * Node2_5 = getnewNode(1);
+	struct Node * Node2_6 = getnewNode(2);
 
 	//List1 = Node1_1;
-	List2 = insert(List2, Node2_1);
+	//List2 = insert(List2, Node2_1);
+	insert(List2, Node2_1);
 	insert(List2, Node2_2);
 	insert(List2, Node2_3);
 	insert(List2, Node2_4);
