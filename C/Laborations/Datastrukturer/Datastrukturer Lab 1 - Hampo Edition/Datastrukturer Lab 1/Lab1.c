@@ -1,16 +1,18 @@
 #include <stdio.h>
-#define SIZE 10 // Max size of stack and queue arrays
 #define TRUE 1
 #define FALSE 0
+#define SIZE 10 //maximum size of stack
 
-struct Node // Node to be used in linked list
+// IN PROGRESS
+
+struct Node //node struct
 {
-	int key;
+	int data;
 	struct Node * next;
 	struct Node * prev;
 };
 
-int isEmpty(struct Node *L) // Returns true if list L (the sentinel is empty, false otherwise
+int isEmpty(struct Node *L) //true if successful, false if unsuccessful
 {
 	if (L->next == L)
 	{
@@ -22,33 +24,33 @@ int isEmpty(struct Node *L) // Returns true if list L (the sentinel is empty, fa
 	}
 }
 
-struct Node * getnewList(struct Node *L)
+struct Node * NewList(struct Node *L) //returns new list 
 {
 	L = (struct Node*)malloc(sizeof(struct Node));
-	L->key = 0;
+	L->data = 999;
 	L->next = L;
 	L->prev = L;
 	return L;
 }
 
-struct Node * getnewNode(int key)
+struct Node * getnewNode(int data)
 {
-	// Create node and allocate memory
+	//create node
 	struct Node * NewNode = (struct Node*)malloc(sizeof(struct Node));
-	NewNode->key = key;
+	NewNode->data = data;
 	NewNode->next = NULL;
 	NewNode->prev = NULL;
 	return NewNode;
 }
 
-int insert(struct Node *L, struct Node *N) // Returns true if node is added to list, false if unsuccessful
+int insert(struct Node *L, struct Node *N) //true if successful, false if unsuccessful
 {
-	if (isEmpty(L) == 1) // If the list is empty...
+	if (isEmpty(L) == 1)
 	{
 		L->next = N;
 		return TRUE;
 	}
-	else // If the list isn't empty...
+	else
 	{
 		L = L->next;
 		while (L->next != NULL)
@@ -61,73 +63,67 @@ int insert(struct Node *L, struct Node *N) // Returns true if node is added to l
 		return TRUE;
 	}
 
-	// If we somehow didn't recieve proper values for the function and the insertion fails...
 	return FALSE;
 }
 
-struct Node * search(struct Node *L, struct Node *N)
+struct Node * search(struct Node *L, struct Node *N) //finds node and returns it
 {
-	if (isEmpty(L) == TRUE) // If the list is empty...
+	if (isEmpty(L) == TRUE)
 	{
 		return NULL;
-	}
-	else // If the list isn't empty...
-	{
-		L = L->next;
-		while (L != NULL)
-		{
-			if (L == N) // If N is found...
-			{
-				return N;
-			}
-			else // If N isn't the current Node
-			{
-				// Look at the next Node
-				L = L->next;
-			}
-		}
-
-		// If N isn't in L...
-		return NULL;
-	}
-}
-
-struct Node * delete(struct Node *L, struct Node *N)
-{
-	struct Node * Dummy;
-	if (isEmpty(L) == TRUE) // If the list is empty...
-	{
-		return NULL; // Can't delete from empty list!
-	}
-	else if (L->next == N) // If the Node to be deleted is first in the list...
-	{
-		Dummy = N;
-		L->next = L;
-		return Dummy;
 	}
 	else
 	{
 		L = L->next;
-		Dummy = search(L, N);
-		if (Dummy == NULL) // If the Node isn't in the list...
+		while (L != NULL)
+		{
+			if (L == N)
+			{
+				return N;
+			}
+			else
+			{
+				L = L->next;
+			}
+		}
+		return NULL;
+	}
+}
+
+struct Node * delete(struct Node *L, struct Node *N) //returns deleted node after deletion
+{
+	struct Node * Test;
+	if (isEmpty(L) == TRUE)
+	{
+		return NULL;
+	}
+	else if (L->next == N)
+	{
+		L->next = L;
+		return N;
+	}
+	else
+	{
+		L = L->next;
+		Test = search(L, N);
+		if (Test == NULL)
 		{
 			return NULL;
 		}
-		else // If the Node is in the list...
+		else
 		{
-			Dummy->prev->next = Dummy->next;
-			Dummy->next->prev = Dummy->prev;
-			free(N);
-			return Dummy; // Returns N if it is in the list
+			Test->prev->next = Test->next;
+			Test->next->prev = Test->prev;
+			return Test;
 		}
 	}
 }
 
-struct Node * maximum(struct Node *L) // Returns the node containing the biggest key
+struct Node * maximum(struct Node *L) //returns biggest data node
 {
 	int i;
-	struct Node * Dummy;
-	if (isEmpty(L) == TRUE) // If List is empty...
+	struct Node * Test;
+	if (isEmpty(L) == TRUE)
 	{
 		printf("Maximum problem: Link is empty!\n");
 		return NULL;
@@ -135,57 +131,57 @@ struct Node * maximum(struct Node *L) // Returns the node containing the biggest
 	else
 	{
 		L = L->next;
-		i = L->key;
-		Dummy = L;
+		i = L->data;
+		Test = L;
 		L = L->next;
 
 		while (L != NULL)
 		{
-			if (L->key > i)
+			if (L->data > i)
 			{
-				i = L->key;
-				Dummy = L;
+				i = L->data;
+				Test = L;
 			}
 			L = L->next;
 		}
 
-		return Dummy; // pointer to Node containing biggest key
+		return Test; // pointer to Node containing biggest data
 	}
 }
 
-struct Node * minimum(struct Node *L) // Returns the node containing the smallest key
+struct Node * minimum(struct Node *L) //returns smallest node
 {
 	int i;
-	struct Node * Dummy;
-	if (isEmpty(L) == TRUE) // If List is empty...
+	struct Node * Test;
+	if (isEmpty(L) == TRUE)
 	{
 		return NULL;
 	}
 	else
 	{
 		L = L->next;
-		i = L->key;
-		Dummy = L;
+		i = L->data;
+		Test = L;
 		L = L->next;
 
 		while (L != NULL)
 		{
-			if (L->key < i)
+			if (L->data < i)
 			{
-				i = L->key;
-				Dummy = L;
+				i = L->data;
+				Test = L;
 			}
 			L = L->next;
 		}
 
-		return Dummy; // pointer to Node containing smallest key
+		return Test;
 	}
 }
 
-struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to next node with bigger number
+struct Node * successor(struct Node *L, struct Node *N) //returns next node with biggest data number
 {
 	int i;
-	if (isEmpty(L) == TRUE) // If List is empty...
+	if (isEmpty(L) == TRUE)
 	{
 		printf("Oh no, the list is empty!\n\n");
 		return NULL;
@@ -193,25 +189,25 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 	else
 	{
 		L = L->next;
-		i = N->key;
+		i = N->data;
 		while (N != NULL)
 		{
-			if (N->key > i)
+			if (N->data > i)
 			{
-				return N; // Return successor
+				return N;
 			}
 
 			N = N->next;
 		}
 
-		return NULL; // N was the maximum already
+		return NULL;
 	}
 }
 
-struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to next node with smaller number
+struct Node * predecessor(struct Node *L, struct Node *N) //returns next node with smaller data number
 {
 	int i;
-	if (isEmpty(L) == TRUE) // If List is empty...
+	if (isEmpty(L) == TRUE)
 	{
 		printf("Oh no, the list is empty!\n\n");
 		return NULL;
@@ -219,25 +215,24 @@ struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to 
 	else
 	{
 		L = L->next;
-		i = N->key;
+		i = N->data;
 		while (N != NULL)
 		{
-			if (N->key < i)
+			if (N->data < i)
 			{
-				return N; // Return predecessor
+				return N;
 			}
 
 			N = N->next;
 		}
 
-		return NULL; // N was the minimum already
+		return NULL;
 	}
 }
 
-// Initialize stack array
 int stackArray[SIZE], tracker = -1;
 
-int addtostack(int data) // Adds data to top of stack. Returns true if successful, false if unsuccessful
+int addtostack(int data) //adds to stack. True if successful, false if unsuccessful
 {
 	if (tracker == -1)
 	{
@@ -260,7 +255,7 @@ int addtostack(int data) // Adds data to top of stack. Returns true if successfu
 	}
 }
 
-int readstack() // Returns data at top of stack
+int readstack() //returns top of stack
 {
 	int result, i;
 
@@ -277,10 +272,9 @@ int readstack() // Returns data at top of stack
 	}
 }
 
-// Initialize queue array
 int arrayQueue[SIZE], front = -1, rear = -1;
 
-int addtoqueue(int data) // Adds data to end to queue. Returns true if successful, false if unsuccessful
+int addtoqueue(int data) //adds data to queue. True if successful, false if unsuccessful
 {
 	if (rear == SIZE - 1)
 	{
@@ -301,7 +295,7 @@ int addtoqueue(int data) // Adds data to end to queue. Returns true if successfu
 	}
 }
 
-int readqueue() // Reads data from start of queue and returns it
+int readqueue() //reads start of queue
 {
 	int result, i;
 	if (front == -1)
@@ -331,15 +325,14 @@ int readqueue() // Reads data from start of queue and returns it
 
 int main()
 {
-	// EXERCISE 1:
 	printf("Exercise 1:\n");
-	// Create first list
-	struct Node * List1 = NULL;
-	List1 = getnewList(List1);
 
-	if (isEmpty(List1) == TRUE)
+	struct Node * list1 = NULL;
+	list1 = getnewList(list1);
+
+	if (isEmpty(list1) == TRUE)
 	{
-		printf("List1 is empty!\n\n");
+		printf("list1 is empty!\n\n");
 	}
 
 	struct Node * Node1_1 = getnewNode(3);
@@ -349,22 +342,19 @@ int main()
 	struct Node * Node1_5 = getnewNode(8);
 	struct Node * Node1_6 = getnewNode(7);
 
-	//List1 = Node1_1;
-	//List1 = insert(List1, Node1_1);
-	insert(List1, Node1_1);
-	insert(List1, Node1_2);
-	insert(List1, Node1_3);
-	insert(List1, Node1_4);
-	insert(List1, Node1_5);
-	insert(List1, Node1_6);
+	insert(list1, Node1_1);
+	insert(list1, Node1_2);
+	insert(list1, Node1_3);
+	insert(list1, Node1_4);
+	insert(list1, Node1_5);
+	insert(list1, Node1_6);
 
-	// AAAAAA List 2
-	struct Node * List2 = NULL;
-	List2 = getnewList(List2);
+	struct Node * list2 = NULL;
+	list2 = getnewList(list2);
 
-	if (isEmpty(List2) == TRUE)
+	if (isEmpty(list2) == TRUE)
 	{
-		printf("List2 is empty!\n\n");
+		printf("list2 is empty!\n\n");
 	}
 
 	struct Node * Node2_1 = getnewNode(5);
@@ -374,108 +364,100 @@ int main()
 	struct Node * Node2_5 = getnewNode(1);
 	struct Node * Node2_6 = getnewNode(2);
 
-	//List1 = Node1_1;
-	//List2 = insert(List2, Node2_1);
-	insert(List2, Node2_1);
-	insert(List2, Node2_2);
-	insert(List2, Node2_3);
-	insert(List2, Node2_4);
-	insert(List2, Node2_5);
-	insert(List2, Node2_6);
-
-
-	// EXERCISE 2:
+	insert(list2, Node2_1);
+	insert(list2, Node2_2);
+	insert(list2, Node2_3);
+	insert(list2, Node2_4);
+	insert(list2, Node2_5);
+	insert(list2, Node2_6);
 
 	printf("Exercise 2:\n");
 
 	struct Node * maximus;
-	maximus = maximum(List1);
-	printf("%d is the biggest number in List1\n\n", maximus->key);
+	maximus = maximum(list1);
+	printf("%d is the biggest number in list1\n\n", maximus->data);
 
 	struct Node * minimus;
-	minimus = minimum(List1);
-	printf("%d is the biggest number in List1\n\n", minimus->key);
+	minimus = minimum(list1);
+	printf("%d is the biggest number in list1\n\n", minimus->data);
 
-	maximus = maximum(List2);
-	printf("%d is the biggest number in List2\n\n", maximus->key);
-	minimus = minimum(List2);
-	printf("%d is the biggest number in List2\n\n", minimus->key);
+	maximus = maximum(list2);
+	printf("%d is the biggest number in list2\n\n", maximus->data);
+	minimus = minimum(list2);
+	printf("%d is the biggest number in list2\n\n", minimus->data);
 
 	struct Node * successorus;
-	successorus = successor(List1, Node1_3);
+	successorus = successor(list1, Node1_3);
 	struct Node * predecessorus;
-	predecessorus = predecessor(List1, Node1_3);
+	predecessorus = predecessor(list1, Node1_3);
 
 	if (predecessorus != NULL)
 	{
-		printf("%d is the successor and %d is the predecessor of Node 3 with key 5 in List1\n\n", successorus->key, predecessorus->key);
+		printf("%d is the successor and %d is the predecessor of Node 3 with data 5 in list1\n\n", successorus->data, predecessorus->data);
 	}
 	else
 	{
-		printf("%d is the successor and there is no smaller next node to Node 3 with key 5\n\n", successorus->key);
+		printf("%d is the successor and there is no smaller next node to Node 3 with data 5\n\n", successorus->data);
 	}
 
-	successorus = successor(List2, Node2_3);
-	predecessorus = predecessor(List2, Node2_3);
+	successorus = successor(list2, Node2_3);
+	predecessorus = predecessor(list2, Node2_3);
 
 	if (successorus != NULL)
 	{
-		printf("%d is the successor and %d is the predecessor of Node 3 with key 9 in List1\n\n", successorus->key, predecessorus->key);
+		printf("%d is the successor and %d is the predecessor of Node 3 with data 9 in list1\n\n", successorus->data, predecessorus->data);
 	}
 	else
 	{
-		printf("%d is the predecessor and there is no bigger next node to Node 3 with key 9\n\n", predecessorus->key);
+		printf("%d is the predecessor and there is no bigger next node to Node 3 with data 9\n\n", predecessorus->data);
 	}
 
-	maximus = maximum(List1);
+	maximus = maximum(list1);
 	int i = 0, j = 0;
-	struct Node * Teststruct = List1;
+	struct Node * Teststruct = list1;
 	while (Teststruct != maximus)
 	{
 		i++;
 		Teststruct = Teststruct->next;
 	}
 
-	struct Node * Teststruct2 = List2;
+	struct Node * Teststruct2 = list2;
 	for (j = 0; j != i; j++)
 	{
 		Teststruct2 = Teststruct2->next;
 	}
 
-	predecessorus = predecessor(List2, Teststruct2);
+	predecessorus = predecessor(list2, Teststruct2);
 
-	printf("%d is the predecessor in List2 of the maximum of List1\n\n", predecessorus->key);
+	printf("%d is the predecessor in list2 of the maximum of list1\n\n", predecessorus->data);
 
-	maximus = maximum(List2);
+	maximus = maximum(list2);
 	i = 0;
 	j = 0;
 
-	Teststruct = List2;
+	Teststruct = list2;
 	while (Teststruct != maximus)
 	{
 		i++;
 		Teststruct = Teststruct->next;
 	}
 
-	Teststruct2 = List1;
+	Teststruct2 = list1;
 	for (j = 0; j != i; j++)
 	{
 		Teststruct2 = Teststruct2->next;
 	}
 
-	predecessorus = predecessor(List1, Teststruct2);
+	predecessorus = predecessor(list1, Teststruct2);
 
 	if (predecessorus != NULL)
 	{
-		printf("%d is the predecessor in List1 of the maximum of List2\n\n", predecessorus->key);
+		printf("%d is the predecessor in list1 of the maximum of list2\n\n", predecessorus->data);
 	}
 	else
 	{
-		printf("There is no next smaller number in List1 of the maximum of List2\n\n");
+		printf("There is no next smaller number in list1 of the maximum of list2\n\n");
 	}
-
-
-	// EXERCISE 3:
 
 	addtostack(9);
 	addtostack(6);
