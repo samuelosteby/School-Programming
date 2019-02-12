@@ -1,5 +1,7 @@
 #include <stdio.h>
 #define SIZE 10 // Max size of stack and queue arrays
+#define TRUE 1
+#define FALSE 0
 
 struct Node // Node to be used in linked list
 {
@@ -8,15 +10,15 @@ struct Node // Node to be used in linked list
 	struct Node * prev;
 };
 
-int isEmpty(struct Node *L) // Returns true if list L is empty, false otherwise
+int isEmpty(struct Node *L) // Returns true if list L (the sentinel is empty, false otherwise
 {
 	if (L->next == L)
 	{
-		return 1;
+		return TRUE;
 	}
 	else
 	{
-		return 0;
+		return FALSE;
 	}
 }
 
@@ -44,7 +46,7 @@ int insert(struct Node *L, struct Node *N) // Returns true if node is added to l
 	if (isEmpty(L) == 1) // If the list is empty...
 	{
 		L->next = N;
-		return 1;
+		return TRUE;
 	}
 	else // If the list isn't empty...
 	{
@@ -56,16 +58,16 @@ int insert(struct Node *L, struct Node *N) // Returns true if node is added to l
 
 		L->next = N;
 		N->prev = L;
-		return 1;
+		return TRUE;
 	}
 
 	// If we somehow didn't recieve proper values for the function and the insertion fails...
-	return 0;
+	return FALSE;
 }
 
 struct Node * search(struct Node *L, struct Node *N)
 {
-	if (isEmpty(L) == 1) // If the list is empty...
+	if (isEmpty(L) == TRUE) // If the list is empty...
 	{
 		return NULL;
 	}
@@ -93,14 +95,13 @@ struct Node * search(struct Node *L, struct Node *N)
 struct Node * delete(struct Node *L, struct Node *N)
 {
 	struct Node * Dummy;
-	if (isEmpty(L) == 1) // If the list is empty...
+	if (isEmpty(L) == TRUE) // If the list is empty...
 	{
 		return NULL; // Can't delete from empty list!
 	}
 	else if (L->next == N) // If the Node to be deleted is first in the list...
 	{
 		Dummy = N;
-		free(N);
 		L->next = L;
 		return Dummy;
 	}
@@ -126,7 +127,7 @@ struct Node * maximum(struct Node *L) // Returns the node containing the biggest
 {
 	int i;
 	struct Node * Dummy;
-	if (isEmpty(L) == 1) // If List is empty...
+	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Maximum problem: Link is empty!\n");
 		return NULL;
@@ -156,7 +157,7 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 {
 	int i;
 	struct Node * Dummy;
-	if (isEmpty(L) == 1) // If List is empty...
+	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		return NULL;
 	}
@@ -184,7 +185,7 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to next node with bigger number
 {
 	int i;
-	if (isEmpty(L) == 1) // If List is empty...
+	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
 		return NULL;
@@ -210,7 +211,7 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to next node with smaller number
 {
 	int i;
-	if (isEmpty(L) == 1) // If List is empty...
+	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
 		return NULL;
@@ -243,19 +244,19 @@ int addtostack(int data) // Adds data to top of stack. Returns true if successfu
 		tracker = 0;
 		stackArray[0] = data;
 		printf("%d was added to stack!\n\n", data);
-		return 1;
+		return TRUE;
 	}
 	else if (tracker == SIZE - 1)
 	{
 		printf("Stack is full!\n\n");
-		return 0;
+		return FALSE;
 	}
 	else
 	{
 		tracker++;
 		stackArray[tracker] = data;
 		printf("%d was added to stack!\n\n", data);
-		return 1;
+		return TRUE;
 	}
 }
 
@@ -284,7 +285,7 @@ int addtoqueue(int data) // Adds data to end to queue. Returns true if successfu
 	if (rear == SIZE - 1)
 	{
 		printf("Queue is full!\n\n");
-		return 0;
+		return FALSE;
 	}
 	else
 	{
@@ -296,7 +297,7 @@ int addtoqueue(int data) // Adds data to end to queue. Returns true if successfu
 		rear++;
 		arrayQueue[rear] = data;
 		printf("Added %d to queue!\n\n", data);
-		return 1;
+		return TRUE;
 	}
 }
 
@@ -336,7 +337,7 @@ int main()
 	struct Node * List1 = NULL;
 	List1 = getnewList(List1);
 
-	if (isEmpty(List1) == 1)
+	if (isEmpty(List1) == TRUE)
 	{
 		printf("List1 is empty!\n\n");
 	}
@@ -361,7 +362,7 @@ int main()
 	struct Node * List2 = NULL;
 	List2 = getnewList(List2);
 
-	if (isEmpty(List2) == 1)
+	if (isEmpty(List2) == TRUE)
 	{
 		printf("List2 is empty!\n\n");
 	}
