@@ -117,7 +117,6 @@ struct Node * delete(struct Node *L, struct Node *N)
 		{
 			Dummy->prev->next = Dummy->next;
 			Dummy->next->prev = Dummy->prev;
-			free(N);
 			return Dummy; // Returns N if it is in the list
 		}
 	}
@@ -184,7 +183,8 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 
 struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to next node with bigger number
 {
-	int i;
+	int i, searchint, foundnumber = 0;
+	struct Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
@@ -194,23 +194,34 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 	{
 		L = L->next;
 		i = N->key;
-		while (N != NULL)
+		Temp = maximum(L);
+
+		while (L != NULL)
 		{
-			if (N->key > i)
+			if ((L->key > i) && (L->key < Temp->key))
 			{
-				return N; // Return successor
+				Temp = L;
+				foundnumber = 1;
 			}
 
-			N = N->next;
+			L = L->next;
 		}
-
-		return NULL; // N was the maximum already
+		
+		if (foundnumber == 1)
+		{
+			return Temp;
+		}
+		else
+		{
+			return NULL; // N was the maximum already
+		}
 	}
 }
 
 struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to next node with smaller number
 {
-	int i;
+	int i, searchint, foundnumber = 0;
+	struct Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
@@ -220,17 +231,27 @@ struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to 
 	{
 		L = L->next;
 		i = N->key;
-		while (N != NULL)
+		Temp = minimum(L);
+
+		while (L != NULL)
 		{
-			if (N->key < i)
+			if ((L->key < i) && (L->key > Temp->key))
 			{
-				return N; // Return predecessor
+				Temp = L;
+				foundnumber = 1;
 			}
 
-			N = N->next;
+			L = L->next;
 		}
 
-		return NULL; // N was the minimum already
+		if (foundnumber == 1)
+		{
+			return Temp;
+		}
+		else
+		{
+			return NULL; // N was the maximum already
+		}
 	}
 }
 
@@ -394,12 +415,12 @@ int main()
 
 	struct Node * minimus;
 	minimus = minimum(List1);
-	printf("%d is the biggest number in List1\n\n", minimus->key);
+	printf("%d is the smallest number in List1\n\n", minimus->key);
 
 	maximus = maximum(List2);
 	printf("%d is the biggest number in List2\n\n", maximus->key);
 	minimus = minimum(List2);
-	printf("%d is the biggest number in List2\n\n", minimus->key);
+	printf("%d is the smallest number in List2\n\n", minimus->key);
 
 	struct Node * successorus;
 	successorus = successor(List1, Node1_3);
@@ -412,7 +433,7 @@ int main()
 	}
 	else
 	{
-		printf("%d is the successor and there is no smaller next node to Node 3 with key 5\n\n", successorus->key);
+		printf("%d is the successor and there is no smaller next node to Node 3 with key 5 in List2\n\n", successorus->key);
 	}
 
 	successorus = successor(List2, Node2_3);
@@ -428,51 +449,16 @@ int main()
 	}
 
 	maximus = maximum(List1);
-	int i = 0, j = 0;
-	struct Node * Teststruct = List1;
-	while (Teststruct != maximus)
-	{
-		i++;
-		Teststruct = Teststruct->next;
-	}
+	struct Node * Crossoverpred = getnewNode(maximus->key);
+	Crossoverpred = predecessor(List2, Crossoverpred);
 
-	struct Node * Teststruct2 = List2;
-	for (j = 0; j != i; j++)
-	{
-		Teststruct2 = Teststruct2->next;
-	}
-
-	predecessorus = predecessor(List2, Teststruct2);
-
-	printf("%d is the predecessor in List2 of the maximum of List1\n\n", predecessorus->key);
+	printf("%d is the predecessor in List2 of the maximum of List1\n\n", Crossoverpred->key);
 
 	maximus = maximum(List2);
-	i = 0;
-	j = 0;
+	Crossoverpred = getnewNode(maximus->key);
+	Crossoverpred = predecessor(List1, Crossoverpred);
 
-	Teststruct = List2;
-	while (Teststruct != maximus)
-	{
-		i++;
-		Teststruct = Teststruct->next;
-	}
-
-	Teststruct2 = List1;
-	for (j = 0; j != i; j++)
-	{
-		Teststruct2 = Teststruct2->next;
-	}
-
-	predecessorus = predecessor(List1, Teststruct2);
-
-	if (predecessorus != NULL)
-	{
-		printf("%d is the predecessor in List1 of the maximum of List2\n\n", predecessorus->key);
-	}
-	else
-	{
-		printf("There is no next smaller number in List1 of the maximum of List2\n\n");
-	}
+	printf("%d is the predecessor in List1 of the maximum of List2\n\n", Crossoverpred->key);
 
 
 	// EXERCISE 3:
