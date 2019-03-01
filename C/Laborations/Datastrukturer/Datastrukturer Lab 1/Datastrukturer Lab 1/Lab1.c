@@ -206,7 +206,7 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 
 			L = L->next;
 		}
-		
+
 		if (foundnumber == 1)
 		{
 			return Temp;
