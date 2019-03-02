@@ -4,6 +4,8 @@
 #define TRUE 1
 #define FALSE 0
 
+// CREATED BY: Samuel Östeby
+
 int main()
 {
 	// EXERCISE 1:
