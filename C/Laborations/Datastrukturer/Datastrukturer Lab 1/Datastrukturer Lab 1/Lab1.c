@@ -510,4 +510,4 @@ int main()
 	readqueue();
 
 	system("pause");
-}
+} // RIGHT VERSION
