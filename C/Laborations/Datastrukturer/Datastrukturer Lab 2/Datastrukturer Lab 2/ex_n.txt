@@ -1,3 +1,6 @@
+By: Samuel Östeby
+
+
 Exercise 3
 Descending order: I would choose merge sort in this situation, but either merge sort or quick sort works well. The only important thing is to not use insertion sort.
 Insertion sort is incredibly slow in this situation because it'd have to swap and perform an operation every single time as it iterates through the array due to everything
@@ -12,3 +15,9 @@ leave everything intact and blaze through the list without having to waste any m
 
 Both positive and negative numbers: I'd choose quick sort for this task. Since nothing more about the array is known, quick sort tends to be the fastest for arrays 
 except in just a few edge cases when the array is exceedingly big.
+
+
+Exercise 5
+I decided to test Hampus Tuokkola's implementation of the various sorting algorithms. To test his implementation, I used the functions he had defined in his project
+and used both my own personal number as well as a custom list of 20 random numbers. I used both his bubble sort and his merge sort, both which performed just as expected
+and sorted both the lists without any errors or warnings.
