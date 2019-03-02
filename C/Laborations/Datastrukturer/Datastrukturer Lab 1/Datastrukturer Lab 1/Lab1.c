@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define SIZE 10 // Max size of stack and queue arrays
 #define TRUE 1
 #define FALSE 0
@@ -25,7 +26,7 @@ int isEmpty(struct Node *L) // Returns true if list L (the sentinel is empty, fa
 struct Node * getnewList(struct Node *L)
 {
 	L = (struct Node*)malloc(sizeof(struct Node));
-	L->key = 0;
+	L->key = 1;
 	L->next = L;
 	L->prev = L;
 	return L;
@@ -183,7 +184,7 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 
 struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to next node with bigger number
 {
-	int i, searchint, foundnumber = 0;
+	int i = 0, searchint = 0, foundnumber = 0;
 	struct Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
@@ -220,7 +221,7 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 
 struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to next node with smaller number
 {
-	int i, searchint, foundnumber = 0;
+	int i = 0, searchint = 0, foundnumber = 0;
 	struct Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
@@ -281,13 +282,14 @@ int addtostack(int data) // Adds data to top of stack. Returns true if successfu
 	}
 }
 
-int readstack() // Returns data at top of stack
+int readstack() // Returns data at top of stack, returns -999 if stack is empty
 {
-	int result, i;
+	int result = 0, i = 0;
 
 	if (tracker == -1)
 	{
 		printf("Stack is empty!\n\n");
+		return -999;
 	}
 	else
 	{
@@ -322,12 +324,13 @@ int addtoqueue(int data) // Adds data to end to queue. Returns true if successfu
 	}
 }
 
-int readqueue() // Reads data from start of queue and returns it
+int readqueue() // Reads data from start of queue and returns it, returns -999 if queue is empty
 {
 	int result, i;
 	if (front == -1)
 	{
 		printf("The queue is empty!\n\n");
+		return -999;
 	}
 	else
 	{
