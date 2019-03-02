@@ -18,5 +18,25 @@
     <ClCompile Include="Lab1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="linkedlist.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stackarray.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="queuearray.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="linkedlist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stackarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="queuearray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,6 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lab1.c" />
+    <ClCompile Include="linkedlist.c" />
+    <ClCompile Include="queuearray.c" />
+    <ClCompile Include="stackarray.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="linkedlist.h" />
+    <ClInclude Include="queuearray.h" />
+    <ClInclude Include="stackarray.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
