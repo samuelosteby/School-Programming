@@ -14,7 +14,7 @@ Queue_array * getnewQueue(Queue_array *Queue, int size)
 
 int enqueue(Queue_array *Queue, int data)
 {
-	if (Queue->rear == Queue->size - 1)
+	if (Queue->rear == Queue->size - 1) // If the queue is full
 	{
 		printf("Queue is full!\n\n");
 		return FALSE;
@@ -38,7 +38,7 @@ int enqueue(Queue_array *Queue, int data)
 int dequeue(Queue_array *Queue)
 {
 	int result, i;
-	if (Queue->front == -1)
+	if (Queue->front == -1) // If the queue is empty
 	{
 		printf("The queue is empty!\n\n");
 		return -999;
@@ -67,7 +67,7 @@ int dequeue(Queue_array *Queue)
 
 void printQueue(Queue_array *Queue)
 {
-	if (Queue->front == -1)
+	if (Queue->front == -1) // If the queue is empty...
 	{
 		printf("The queue is empty!\n\n");
 	}

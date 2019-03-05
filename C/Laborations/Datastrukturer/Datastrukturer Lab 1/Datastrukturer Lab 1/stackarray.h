@@ -19,4 +19,4 @@ int pushStack(Stack_array *Stack, int data); // Adds data to end to queue. Retur
 
 int popStack(Stack_array *Stack); // Reads data from start of queue and returns it, returns -999 if queue is empty
 
-void printStack(Stack_array *Stack);
+void printStack(Stack_array *Stack); // Prints out all the values in the stack

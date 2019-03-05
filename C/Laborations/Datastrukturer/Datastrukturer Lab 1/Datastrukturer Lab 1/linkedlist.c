@@ -95,13 +95,12 @@ Node * delete(List *L, Node *N)
 	}
 	else if (L->next == N) // If the Node to be deleted is first in the list...
 	{
-		if (L->next->next == NULL)
+		if (L->next->next == NULL) // If there's no node after the node to be deleted
 		{
 			L->next = L;
-			printf("Lmao");
 			return N;
 		}
-		else
+		else // If there is a node after the node to be deleted
 		{
 			L->next = L->next->next;
 			L = L->next;

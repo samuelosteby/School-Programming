@@ -20,4 +20,4 @@ int enqueue(Queue_array *Queue, int data); // Adds data to end to queue. Returns
 
 int dequeue(Queue_array *Queue); // Reads data from start of queue and returns it, returns -999 if queue is empty
 
-void printQueue(Queue_array *Queue);
+void printQueue(Queue_array *Queue); // Prints out all the values in the queue

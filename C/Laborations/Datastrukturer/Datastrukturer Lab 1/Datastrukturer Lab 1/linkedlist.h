@@ -40,4 +40,4 @@ Node * successor(List *L, Node *N); // Finds the node containing the next bigges
 
 Node * predecessor(List *L, Node *N); // Finds the node containing the next smaller key in the list. Returns NULL if unsuccessful
 
-void printList(List *L);
+void printList(List *L); // Prints out all the values from the list, making sure to ignore the sentinel
