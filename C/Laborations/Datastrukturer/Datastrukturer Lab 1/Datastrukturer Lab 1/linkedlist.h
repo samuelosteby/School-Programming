@@ -9,30 +9,35 @@
 #define _minimum_h
 #define _successor_h
 #define _predecessor_h
+#define _printList_h
 
-struct Node // Node to be used in linked list
+typedef struct Node // Node to be used in linked list
 {
 	int key;
 	struct Node * next;
 	struct Node * prev;
-};
+}Node;
 
-int isEmpty(struct Node *L); // Returns TRUE if only the sentinel is in linked list, false otherwise
+typedef Node List;
 
-struct Node * getnewList(struct Node *L); // Creates new sentinel and returns the node to be used as a head
+int isEmpty(List *L); // Returns TRUE if only the sentinel is in linked list, false otherwise
 
-struct Node * getnewNode(int key); // Creates a new node with the defined key and returns the node
+Node * getnewList(List *L); // Creates new sentinel and returns the node to be used as a head
 
-int insert(struct Node *L, struct Node *N); // Inserts the node into the list. Returns TRUE if successful, and FALSE if unuccessful
+Node * getnewNode(int key); // Creates a new node with the defined key and returns the node
 
-struct Node * search(struct Node *L, struct Node *N); // Searches through a list and returns the node if successfully found, otherwise returns NULL
+int insert(List *L, Node *N); // Inserts the node into the list. Returns TRUE if successful, and FALSE if unuccessful
 
-struct Node * delete(struct Node *L, struct Node *N); // Deletes the node from the list and returns the node if successful, otherwise returns NULL
+Node * search(List *L, int number); // Searches through a list and returns the node if successfully found, otherwise returns NULL
 
-struct Node * maximum(struct Node *L); // Returns the node with the biggest key in the list. Returns NULL if unsuccessful
+Node * delete(List *L, Node *N); // Deletes the node from the list and returns the node if successful, otherwise returns NULL
 
-struct Node * minimum(struct Node *L); // Returns the node with the smallest key in the list. Returns NULL if unsuccessful
+Node * maximum(List *L); // Returns the node with the biggest key in the list. Returns NULL if unsuccessful
 
-struct Node * successor(struct Node *L, struct Node *N); // Finds the node containing the next biggest key in the list. Returns NULL if unsuccessful
+Node * minimum(List *L); // Returns the node with the smallest key in the list. Returns NULL if unsuccessful
 
-struct Node * predecessor(struct Node *L, struct Node *N); // Finds the node containing the next smaller key in the list. Returns NULL if unsuccessful
+Node * successor(List *L, Node *N); // Finds the node containing the next biggest key in the list. Returns NULL if unsuccessful
+
+Node * predecessor(List *L, Node *N); // Finds the node containing the next smaller key in the list. Returns NULL if unsuccessful
+
+void printList(List *L);

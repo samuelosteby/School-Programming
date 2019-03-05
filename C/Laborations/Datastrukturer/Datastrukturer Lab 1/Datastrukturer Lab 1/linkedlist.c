@@ -4,7 +4,7 @@
 #define TRUE 1
 #define FALSE 0
 
-int isEmpty(struct Node *L)
+int isEmpty(List *L)
 {
 	if (L->next == L)
 	{
@@ -16,26 +16,26 @@ int isEmpty(struct Node *L)
 	}
 }
 
-struct Node * getnewList(struct Node *L)
+Node * getnewList(List *L)
 {
-	L = (struct Node*)malloc(sizeof(struct Node));
+	L = (List*)malloc(sizeof(List));
 	L->key = 1;
 	L->next = L;
 	L->prev = L;
 	return L;
 }
 
-struct Node * getnewNode(int key)
+Node * getnewNode(int key)
 {
 	// Create node and allocate memory
-	struct Node * NewNode = (struct Node*)malloc(sizeof(struct Node));
+	Node * NewNode = (Node*)malloc(sizeof(Node));
 	NewNode->key = key;
 	NewNode->next = NULL;
 	NewNode->prev = NULL;
 	return NewNode;
 }
 
-int insert(struct Node *L, struct Node *N) // Returns true if node is added to list, false if unsuccessful
+int insert(List *L, Node *N) // Returns true if node is added to list, false if unsuccessful
 {
 	if (isEmpty(L) == 1) // If the list is empty...
 	{
@@ -59,7 +59,7 @@ int insert(struct Node *L, struct Node *N) // Returns true if node is added to l
 	return FALSE;
 }
 
-struct Node * search(struct Node *L, struct Node *N)
+Node * search(List *L, int number)
 {
 	if (isEmpty(L) == TRUE) // If the list is empty...
 	{
@@ -70,9 +70,9 @@ struct Node * search(struct Node *L, struct Node *N)
 		L = L->next;
 		while (L != NULL)
 		{
-			if (L == N) // If N is found...
+			if (L->key == number) // If N is found...
 			{
-				return N;
+				return L;
 			}
 			else // If N isn't the current Node
 			{
@@ -86,9 +86,8 @@ struct Node * search(struct Node *L, struct Node *N)
 	}
 }
 
-struct Node * delete(struct Node *L, struct Node *N)
+Node * delete(List *L, Node *N)
 {
-	struct Node * Dummy;
 	if (isEmpty(L) == TRUE) // If the list is empty...
 	{
 		printf("Can't delete from empty list!\n\n");
@@ -96,30 +95,49 @@ struct Node * delete(struct Node *L, struct Node *N)
 	}
 	else if (L->next == N) // If the Node to be deleted is first in the list...
 	{
-		L->next = L;
-		return N;
+		if (L->next->next == NULL)
+		{
+			L->next = L;
+			printf("Lmao");
+			return N;
+		}
+		else
+		{
+			L->next = L->next->next;
+			L = L->next;
+			L->prev = L->prev->prev;
+			N->next = NULL;
+			N->prev = NULL;
+			return N;
+		}
 	}
 	else
 	{
-		L = L->next;
-		Dummy = search(L, N);
-		if (Dummy == NULL) // If the Node isn't in the list...
+		L = search(L, N->key);
+		if (L == NULL) // If the Node isn't in the list...
 		{
 			return NULL;
 		}
 		else // If the Node is in the list...
 		{
-			Dummy->prev->next = Dummy->next;
-			Dummy->next->prev = Dummy->prev;
+			L = L->prev;
+			L->next = L->next->next;
+			if (L->next != NULL)
+			{
+				L = L->next;
+				L->prev = L->prev->prev;
+			}
+			N->next = NULL;
+			N->prev = NULL;
 			return N; // Returns N if it is in the list
 		}
 	}
 }
 
-struct Node * maximum(struct Node *L)
+Node * maximum(List *L)
 {
 	int i;
-	struct Node * Dummy;
+	Node * Dummy;
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Maximum problem: Link is empty!\n");
@@ -146,10 +164,10 @@ struct Node * maximum(struct Node *L)
 	}
 }
 
-struct Node * minimum(struct Node *L) // Returns the node containing the smallest key
+Node * minimum(List *L) // Returns the node containing the smallest key
 {
 	int i;
-	struct Node * Dummy;
+	Node * Dummy;
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		return NULL;
@@ -175,10 +193,10 @@ struct Node * minimum(struct Node *L) // Returns the node containing the smalles
 	}
 }
 
-struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to next node with bigger number
+Node * successor(List *L, Node *N) // Returns pointer to next node with bigger number
 {
 	int i = 0, searchint = 0, foundnumber = 0;
-	struct Node * Temp = getnewNode(0);
+	Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
@@ -212,10 +230,10 @@ struct Node * successor(struct Node *L, struct Node *N) // Returns pointer to ne
 	}
 }
 
-struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to next node with smaller number
+Node * predecessor(List *L, Node *N) // Returns pointer to next node with smaller number
 {
 	int i = 0, searchint = 0, foundnumber = 0;
-	struct Node * Temp = getnewNode(0);
+	Node * Temp = getnewNode(0);
 	if (isEmpty(L) == TRUE) // If List is empty...
 	{
 		printf("Oh no, the list is empty!\n\n");
@@ -247,4 +265,22 @@ struct Node * predecessor(struct Node *L, struct Node *N) // Returns pointer to 
 			return NULL; // N was the maximum already
 		}
 	}
+}
+
+void printList(List *L)
+{
+	if (isEmpty(L) == TRUE)
+	{
+		printf("List is empty!");
+	}
+	else 
+	{
+		L = L->next;
+		while (L != NULL)
+		{
+			printf("%d ", L->key);
+			L = L->next;
+		}
+	}
+	printf("\n\n");
 }

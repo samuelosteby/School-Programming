@@ -1,43 +1,76 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "stackarray.h"
 
-int addtostack(int data)
+Stack_array * getnewStack(Stack_array *Stack, int size)
 {
-	if (tracker == -1)
+	Stack = (Stack_array*)malloc(sizeof(Stack_array));
+	Stack->size = size;
+	Stack->data = (int*)malloc(sizeof(int) * Stack->size);
+	Stack->tracker = -1;
+	return Stack;
+}
+
+int pushStack(Stack_array *Stack, int data)
+{
+	if (Stack->tracker == -1)
 	{
-		tracker = 0;
-		stackArray[0] = data;
+		Stack->tracker = 0;
+		Stack->data[0] = data;
 		printf("%d was added to stack!\n\n", data);
+		printStack(Stack);
 		return TRUE;
 	}
-	else if (tracker == SIZE - 1)
+	else if (Stack->tracker == Stack->size - 1)
 	{
 		printf("Stack is full!\n\n");
 		return FALSE;
 	}
 	else
 	{
-		tracker++;
-		stackArray[tracker] = data;
+		Stack->tracker = Stack->tracker + 1;
+		Stack->data[Stack->tracker] = data;
 		printf("%d was added to stack!\n\n", data);
+
+		printStack(Stack);
 		return TRUE;
 	}
 }
 
-int readstack()
+int popStack(Stack_array *Stack)
 {
 	int result = 0, i = 0;
 
-	if (tracker == -1)
+	if (Stack->tracker == -1)
 	{
 		printf("Stack is empty!\n\n");
 		return -999;
 	}
 	else
 	{
-		result = stackArray[tracker];
-		tracker--;
+		result = Stack->data[Stack->tracker];
+		Stack->tracker = Stack->tracker - 1;
 		printf("Returning %d\n\n", result);
+
+		printStack(Stack);
 		return result;
+	}
+}
+
+void printStack(Stack_array *Stack)
+{
+	if (Stack->tracker == -1)
+	{
+		printf("The stack is empty!\n\n");
+	}
+	else
+	{
+		printf("The stack: ");
+		int i;
+		for (i = 0; i <= Stack->tracker; i++)
+		{
+			printf("%d ", Stack->data[i]);
+		}
+		printf("\n\n");
 	}
 }
