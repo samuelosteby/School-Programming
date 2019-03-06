@@ -9,17 +9,6 @@ void swap(int *x, int *y)
 	*y = temp;
 }
 
-void printArray(int array[], int size)
-{
-	int i;
-	printf("The array: ");
-	for (i = 0; i < size; i++)
-	{
-		printf("%d ", array[i]);
-	}
-	printf("\n\n");
-}
-
 void bubbleSort(int array[], int size)
 {
 	int i, j;

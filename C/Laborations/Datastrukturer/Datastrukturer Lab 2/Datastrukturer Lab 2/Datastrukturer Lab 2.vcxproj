@@ -116,11 +116,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bubblesort.c" />
+    <ClCompile Include="integerarray.c" />
     <ClCompile Include="Lab2.c" />
     <ClCompile Include="mergesort.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubblesort.h" />
+    <ClInclude Include="integerarray.h" />
     <ClInclude Include="mergesort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

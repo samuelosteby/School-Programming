@@ -3,55 +3,120 @@
 #include <stdlib.h>
 #include "bubblesort.h"
 #include "mergesort.h"
+#include "integerarray.h"
 
 int main()
 {
+	// EXERCISE 1
 	printf("Exercise 1: \n\n");
-	int testarray[] = { 9, 6, 0, 7, 1, 0, 0, 1, 3, 9 };
-	int lab1list[] = { 3, 1, 5, 10, 8, 7 };
-	int lab1list2[] = { 5, 2, 9, 6, 1, 2 };
-	int length = sizeof(testarray) / sizeof(testarray[0]);
-	int lengthlab1list = sizeof(lab1list) / sizeof(lab1list[0]);
-	int lengthlab1list2 = sizeof(lab1list2) / sizeof(lab1list2[0]);
 
-	printArray(lab1list, lengthlab1list);
-	printf("Sorting with bubble sort...\n\n");
-	bubbleSort(lab1list, lengthlab1list);
-	printArray(lab1list, lengthlab1list);
+	// Create arrays...
+	Intarray * Iarraylab1 = NULL;
+	Iarraylab1 = getnewIntarray(Iarraylab1, 6);
+	Iarraylab1->data[0] = 3;
+	Iarraylab1->data[1] = 1;
+	Iarraylab1->data[2] = 5;
+	Iarraylab1->data[3] = 10;
+	Iarraylab1->data[4] = 8;
+	Iarraylab1->data[5] = 7;
 
-	printArray(lab1list2, lengthlab1list2);
-	printf("Sorting with bubble sort...\n\n");
-	bubbleSort(lab1list2, lengthlab1list2);
-	printArray(lab1list2, lengthlab1list2);
+	Intarray * Iarraylab2 = NULL;
+	Iarraylab2 = getnewIntarray(Iarraylab1, 6);
+	Iarraylab2->data[0] = 5;
+	Iarraylab2->data[1] = 2;
+	Iarraylab2->data[2] = 9;
+	Iarraylab2->data[3] = 6;
+	Iarraylab2->data[4] = 1;
+	Iarraylab2->data[5] = 2;
 
-	printArray(testarray, length);
+	Intarray * Iarray = NULL;
+	Iarray = getnewIntarray(Iarray, 10);
+	Iarray->data[0] = 9;
+	Iarray->data[1] = 6;
+	Iarray->data[2] = 0;
+	Iarray->data[3] = 7;
+	Iarray->data[4] = 1;
+	Iarray->data[5] = 0;
+	Iarray->data[6] = 0;
+	Iarray->data[7] = 1;
+	Iarray->data[8] = 3;
+	Iarray->data[9] = 9;
+
+	// Sort arrays...
+	printArray(Iarraylab1->data, Iarraylab1->size);
 	printf("Sorting with bubble sort...\n\n");
-	bubbleSort(testarray, length);
-	printArray(testarray, length);
+	bubbleSort(Iarraylab1->data, Iarraylab1->size);
+	printArray(Iarraylab1->data, Iarraylab1->size);
+
+	printArray(Iarraylab2->data, Iarraylab2->size);
+	printf("Sorting with bubble sort...\n\n");
+	bubbleSort(Iarraylab2->data, Iarraylab2->size);
+	printArray(Iarraylab2->data, Iarraylab2->size);
+
+	printArray(Iarray->data, Iarray->size);
+	printf("Sorting with bubble sort...\n\n");
+	bubbleSort(Iarray->data, Iarray->size);
+	printArray(Iarray->data, Iarray->size);
 	
 	printf("\n");
 
+	// Free memory of arrays
+	free(Iarray);
+	free(Iarraylab1);
+	free(Iarraylab2);
+
+	//EXERCISE 2
 	printf("Exercise 2: \n\n");
-	int testarray2[] = { 9, 6, 0, 7, 1, 0, 0, 1, 3, 9 };
-	int lab1list_2[] = { 3, 1, 5, 10, 8, 7 };
-	int lab1list2_2[] = { 5, 2, 9, 6, 1, 2 };
-	int length2 = sizeof(testarray) / sizeof(testarray[0]);
-	int lengthlab1list_2 = sizeof(lab1list) / sizeof(lab1list[0]);
-	int lengthlab1list2_2 = sizeof(lab1list2) / sizeof(lab1list2[0]);
 
-	printArray(lab1list_2, lengthlab1list_2);
-	printf("Sorting with merge sort...\n\n");
-	mergeSort(lab1list_2, 0, lengthlab1list_2 - 1);
-	printArray(lab1list_2, sizeof(lab1list_2) / sizeof(lab1list_2[0]));
+	// Create arrays
+	Iarraylab1 = getnewIntarray(Iarraylab1, 6);
+	Iarraylab1->data[0] = 3;
+	Iarraylab1->data[1] = 1;
+	Iarraylab1->data[2] = 5;
+	Iarraylab1->data[3] = 10;
+	Iarraylab1->data[4] = 8;
+	Iarraylab1->data[5] = 7;
 
-	printArray(lab1list2_2, lengthlab1list2_2);
-	printf("Sorting with merge sort...\n\n");
-	mergeSort(lab1list2_2, 0, lengthlab1list2_2 - 1);
-	printArray(lab1list2_2, sizeof(lab1list2_2) / sizeof(lab1list2_2[0]));
+	Iarraylab2 = getnewIntarray(Iarraylab1, 6);
+	Iarraylab2->data[0] = 5;
+	Iarraylab2->data[1] = 2;
+	Iarraylab2->data[2] = 9;
+	Iarraylab2->data[3] = 6;
+	Iarraylab2->data[4] = 1;
+	Iarraylab2->data[5] = 2;
 
-	printArray(testarray2, length2);
+	Iarray = getnewIntarray(Iarray, 10);
+	Iarray->data[0] = 9;
+	Iarray->data[1] = 6;
+	Iarray->data[2] = 0;
+	Iarray->data[3] = 7;
+	Iarray->data[4] = 1;
+	Iarray->data[5] = 0;
+	Iarray->data[6] = 0;
+	Iarray->data[7] = 1;
+	Iarray->data[8] = 3;
+	Iarray->data[9] = 9;
+
+	// Sort arrays
+	printArray(Iarraylab1->data, Iarraylab1->size);
 	printf("Sorting with merge sort...\n\n");
-	mergeSort(testarray2, 0, length2 - 1);
-	printArray(testarray2, sizeof(testarray2) / sizeof(testarray2[0]));
+	mergeSort(Iarraylab1->data, 0, Iarraylab1->size - 1);
+	printArray(Iarraylab1->data, Iarraylab1->size);
+
+	printArray(Iarraylab2->data, Iarraylab2->size);
+	printf("Sorting with merge sort...\n\n");
+	mergeSort(Iarraylab2->data, 0, Iarraylab2->size - 1);
+	printArray(Iarraylab2->data, Iarraylab2->size);
+
+	printArray(Iarray->data, Iarray->size);
+	printf("Sorting with merge sort...\n\n");
+	mergeSort(Iarray->data, 0, Iarray->size - 1);
+	printArray(Iarray->data, Iarray->size);
+
+	// Free memory of arrays
+	free(Iarray);
+	free(Iarraylab1);
+	free(Iarraylab2);
+
 	system("pause");
 }
