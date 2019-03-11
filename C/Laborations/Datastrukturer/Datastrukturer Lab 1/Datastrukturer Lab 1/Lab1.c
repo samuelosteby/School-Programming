@@ -6,29 +6,38 @@
 #define TRUE 1
 #define FALSE 0
 
-// CREATED BY: Samuel Östeby
+// Made by: Samuel Östeby
+// Lab 1 in "Datastrukturer och Algoritmer"
 
 int main()
 {
-	// EXERCISE 1:
-	printf("Exercise 1:\n");
+	printf("Linked Lists:\n\n");
 
-	// Create first list
+	// Create List 1
 	List * List1 = NULL;
-	List1 = getnewList(List1);
+	List1 = getNewList(List1);
 
-	if (isEmpty(List1) == TRUE)
+	// Test if List 1 is empty
+	if (isEmpty(List1))
 	{
-		printf("List1 is empty!\n\n");
+		printf("List 1 is empty.\n");
 	}
 
-	Node * Node1_1 = getnewNode(3);
-	Node * Node1_2 = getnewNode(1);
-	Node * Node1_3 = getnewNode(5);
-	Node * Node1_4 = getnewNode(10);
-	Node * Node1_5 = getnewNode(8);
-	Node * Node1_6 = getnewNode(7);
+	// Populate List 1 with Nodes
+	Node * Node1_1 = NULL;
+	Node1_1 = getNewNode(Node1_1, 3);
+	Node * Node1_2 = NULL;
+	Node1_2 = getNewNode(Node1_2, 1);
+	Node * Node1_3 = NULL;
+	Node1_3 = getNewNode(Node1_3, 5);
+	Node * Node1_4 = NULL;
+	Node1_4 = getNewNode(Node1_4, 10);
+	Node * Node1_5 = NULL;
+	Node1_5 = getNewNode(Node1_5, 8);
+	Node * Node1_6 = NULL;
+	Node1_6 = getNewNode(Node1_6, 7);
 
+	// Insert Nodes into List
 	insert(List1, Node1_1);
 	insert(List1, Node1_2);
 	insert(List1, Node1_3);
@@ -36,30 +45,41 @@ int main()
 	insert(List1, Node1_5);
 	insert(List1, Node1_6);
 
-	printf("List1: ");
+	// Print List 1
+	printf("List 1 is: ");
 	printList(List1);
 
-	//TO DELETE, REMOVE COMMENT SYMBOLS BELOW:
-	//delete(List1, search(List1, 5));
-	//printf("List1: ");
+	// To test delete: Remove comment markers below...
+	//delete(List1, search(List1, 3));
+	//delete(List1, search(List1, 10));
+	//printf("List 1 is: ");
 	//printList(List1);
 
-	// Create second list
+	// Create List 2
 	List * List2 = NULL;
-	List2 = getnewList(List2);
+	List2 = getNewList(List2);
 
-	if (isEmpty(List2) == TRUE)
+	// Test if List 1 is empty
+	if (isEmpty(List2))
 	{
-		printf("List2 is empty!\n\n");
+		printf("List 2 is empty.\n");
 	}
 
-	Node * Node2_1 = getnewNode(5);
-	Node * Node2_2 = getnewNode(2);
-	Node * Node2_3 = getnewNode(9);
-	Node * Node2_4 = getnewNode(6);
-	Node * Node2_5 = getnewNode(1);
-	Node * Node2_6 = getnewNode(2);
+	// Populate List 2 with Nodes
+	Node * Node2_1 = NULL;
+	Node2_1 = getNewNode(Node2_1, 5);
+	Node * Node2_2 = NULL;
+	Node2_2 = getNewNode(Node2_2, 2);
+	Node * Node2_3 = NULL;
+	Node2_3 = getNewNode(Node2_3, 9);
+	Node * Node2_4 = NULL;
+	Node2_4 = getNewNode(Node2_4, 6);
+	Node * Node2_5 = NULL;
+	Node2_5 = getNewNode(Node2_5, 1);
+	Node * Node2_6 = NULL;
+	Node2_6 = getNewNode(Node2_6, 2);
 
+	// Insert Nodes into List
 	insert(List2, Node2_1);
 	insert(List2, Node2_2);
 	insert(List2, Node2_3);
@@ -67,123 +87,140 @@ int main()
 	insert(List2, Node2_5);
 	insert(List2, Node2_6);
 
-	printf("List2: ");
+	// Print List 2
+	printf("List 2 is: ");
 	printList(List2);
 
-	// EXERCISE 2:
+	printf("Maximums, minimums, successors and predecessors:\n");
 
-	printf("Exercise 2:\n");
-
-	Node * maximus;
-	maximus = maximum(List1);
-	printf("%d is the biggest number in List1\n\n", maximus->key);
-
-	Node * minimus;
-	minimus = minimum(List1);
-	printf("%d is the smallest number in List1\n\n", minimus->key);
-
-	maximus = maximum(List2);
-	printf("%d is the biggest number in List2\n\n", maximus->key);
-	minimus = minimum(List2);
-	printf("%d is the smallest number in List2\n\n", minimus->key);
-
-	Node * successorus;
-	successorus = successor(List1, Node1_3);
-	Node * predecessorus;
-	predecessorus = predecessor(List1, Node1_3);
-
-	if (predecessorus != NULL)
+	// Find and print maximum numbers in List 1 and 2
+	if ((List1 != NULL) && (isEmpty(List1) == FALSE))
 	{
-		printf("%d is the successor and %d is the predecessor of Node 3 with key 5 in List1\n\n", successorus->key, predecessorus->key);
+		printf("Maximum in List 1: %d\n", maximum(List1)->key);
+		printf("Minimum in List 1: %d\n\n", minimum(List1)->key);
+	}
+	if ((List2 != NULL) && (isEmpty(List2) == FALSE))
+	{
+		printf("Maximum in List 2: %d\n", maximum(List2)->key);
+		printf("Minimum in List 2: %d\n\n", minimum(List2)->key);
+	}
+
+	if (successor(List1, search(List1, 5)) != NULL)
+	{
+		printf("Successor of Node with Key 5 in List 1: %d \n", successor(List1, search(List1, 5))->key);
 	}
 	else
 	{
-		printf("%d is the successor and there is no smaller next node to Node 3 with key 5 in List2\n\n", successorus->key);
+		printf("There is no successor to Node with Key 5 in List 1:\n");
 	}
 
-	successorus = successor(List2, Node2_3);
-	predecessorus = predecessor(List2, Node2_3);
-
-	if (successorus != NULL)
+	if (predecessor(List1, search(List1, 5)))
 	{
-		printf("%d is the successor and %d is the predecessor of Node 3 with key 9 in List1\n\n", successorus->key, predecessorus->key);
+		printf("Predecessor of Node with Key 5 in List 1: %d \n\n", predecessor(List1, search(List1, 5))->key);
 	}
 	else
 	{
-		printf("%d is the predecessor and there is no bigger next node to Node 3 with key 9\n\n", predecessorus->key);
+		printf("There is no predecessor to Node with Key 5 in List 1:\n");
 	}
 
-	maximus = maximum(List1);
-	Node * Crossoverpred = getnewNode(maximus->key);
-	Crossoverpred = predecessor(List2, Crossoverpred);
+	if (successor(List2, search(List2, 9)) != NULL)
+	{
+		printf("Successor of Node with Key 9 in List 2: %d \n", successor(List2, search(List2, 9))->key);
+	}
+	else
+	{
+		printf("There is no successor to Node with Key 9 in List 2\n");
+	}
 
-	printf("%d is the predecessor in List2 of the maximum of List1\n\n", Crossoverpred->key);
+	if (predecessor(List2, search(List2, 9)) != NULL)
+	{
+		printf("Predecessor of Node with Key 9 in List 2: %d \n\n", predecessor(List2, search(List2, 9))->key);
+	}
+	else
+	{
+		printf("There is no predecessor to Node with Key 9 in List 2\n");
+	}
 
-	maximus = maximum(List2);
-	Crossoverpred = getnewNode(maximus->key);
-	Crossoverpred = predecessor(List1, Crossoverpred);
+	if (predecessor(List2, maximum(List1)) != NULL)
+	{
+		printf("Predecessor in List 2 of Node with maximum Key in List 1: %d \n", predecessor(List2, maximum(List1))->key);
+	}
+	else
+	{
+		printf("There is no predecessor in List 2 of Node with maximum Key in List 1\n");
+	}
 
-	printf("%d is the predecessor in List1 of the maximum of List2\n\n", Crossoverpred->key);
+	if (predecessor(List1, maximum(List2)) != NULL)
+	{
+		printf("Predecessor in List 1 of Node with maximum Key in List 2: %d \n\n", predecessor(List1, maximum(List2))->key);
+	}
+	else
+	{
+		printf("There is no predecessor in List 1 of Node with maximum Key in List 2\n\n");
+	}
+
+	printf("Queue:\n");
 
 
-	// EXERCISE 3:
-	printf("Exercise 3:");
-	Queue_array * Queue = NULL;
-	Queue = getnewQueue(Queue, 10);
+	QueueArray * queue = NULL;
+	queue = createQueue(queue, 10);
+	deQueue(queue); // Test if empty queue can be read from
+	enQueue(queue, 9);
+	enQueue(queue, 6);
+	enQueue(queue, 0);
+	enQueue(queue, 7);
+	enQueue(queue, 1);
+	enQueue(queue, 0);
+	enQueue(queue, 0);
+	enQueue(queue, 1);
+	enQueue(queue, 3);
+	enQueue(queue, 9);
+	enQueue(queue, 1); // This one should say queue is full
+	printf("\n");
+	printQueue(queue); // To show the full queue before emptying it
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue);
+	deQueue(queue); // This one should say queue is empty
 
-	Stack_array * Stack = NULL;
-	Stack = getnewStack(Stack, 10);
+	printf("\n");
+	printf("Stack:\n");
 
-	printf("\nTesting queue!\n\n");
+	StackArray * stack = NULL;
+	stack = createStack(stack, 10);
+	pop(stack); // Test if empty stack can be read from
+	push(stack, 9);
+	push(stack, 6);
+	push(stack, 0);
+	push(stack, 7);
+	push(stack, 1);
+	push(stack, 0);
+	push(stack, 0);
+	push(stack, 1);
+	push(stack, 3);
+	push(stack, 9);
+	push(stack, 1); // This one should say stack is full
+	printf("\n");
+	printStack(stack); // To show the full queue before emptying it
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack);
+	pop(stack); //This one should say stack is empty
 
-	dequeue(Queue);
-	enqueue(Queue, 9);
-	enqueue(Queue, 6);
-	enqueue(Queue, 0);
-	enqueue(Queue, 7);
-	enqueue(Queue, 1);
-	enqueue(Queue, 0);
-	enqueue(Queue, 0);
-	enqueue(Queue, 1);
-	enqueue(Queue, 3);
-	enqueue(Queue, 9);
-	enqueue(Queue, 1);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-	dequeue(Queue);
-
-	printf("\nTesting Stack!\n\n");
-	popStack(Stack);
-	pushStack(Stack, 9);
-	pushStack(Stack, 6);
-	pushStack(Stack, 0);
-	pushStack(Stack, 7);
-	pushStack(Stack, 1);
-	pushStack(Stack, 0);
-	pushStack(Stack, 0);
-	pushStack(Stack, 1);
-	pushStack(Stack, 3);
-	pushStack(Stack, 9);
-	pushStack(Stack, 1);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
-	popStack(Stack);
+	printf("\n");
+	printf("End of exercises!\n\n");
 
 	system("pause");
 }

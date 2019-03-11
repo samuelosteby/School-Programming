@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedlist.h"
+#include "llist.h"
 #define TRUE 1
 #define FALSE 0
 
-List * getNewList(List *L)
+List * newList(List *L)
 {
-	// Allocates memory for and creates Sentinel for Linked List
-	L = (List*)malloc(sizeof(List));
+	//Allocates memory and creates sentinel.
+	L = (List*)malloc(sizeof(List)); 
 	L->key = 0;
 	L->next = L;
 	L->prev = L;
 	return L;
 }
 
-Node * getNewNode(Node *N, int key)
+Node * newNode(Node *N, int key)
 {
-	// Allocates memory for and creates Node for Linked List
+	//Allocates memory and creates a node.
 	N = (Node*)malloc(sizeof(Node));
 	N->key = key;
 	N->next = NULL;
@@ -26,30 +26,24 @@ Node * getNewNode(Node *N, int key)
 
 int isEmpty(List *L)
 {
-	if (L->next == L) // If the sentinel is pointing towards itself...
+	if (L->next == L)
 	{
 		return TRUE;
 	}
-	else
-	{
-		return FALSE;
-	}
+	return FALSE;
 }
 
 void printList(List *L)
 {
-	if (L == NULL)
-	{
-		return;
-	}
+	//Prints out keys from list if not empty.
 	if (isEmpty(L))
 	{
 		return;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
-		while (L != NULL) // Print out each element in List
+		L = L->next;
+		while (L != NULL)
 		{
 			printf("%d ", L->key);
 			L = L->next;
@@ -61,12 +55,12 @@ void printList(List *L)
 
 int insert(List *L, Node *N)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		printf("Can't insert into list, list is null.\n\n");
 		return FALSE;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		L->next = N;
 		N->prev = L;
@@ -74,7 +68,7 @@ int insert(List *L, Node *N)
 	}
 	else
 	{
-		while (L->next != NULL) // Go through List
+		while (L->next != NULL)
 		{
 			L = L->next;
 		}
@@ -86,19 +80,19 @@ int insert(List *L, Node *N)
 
 Node * search(List *L, int key)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		printf("Can't search in list, list is null.\n\n");
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		printf("Can't search, list is empty.\n\n");
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
+		L = L->next;
 		while (L != NULL)
 		{
 			if (L->key == key)
@@ -114,19 +108,19 @@ Node * search(List *L, int key)
 
 Node * delete(List *L, Node *N)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		printf("Can't delete from list, list is null.\n\n");
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		printf("Can't delete, list is empty.\n\n");
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
+		L = L->next;
 		while (L != NULL)
 		{
 			if (L == N)
@@ -158,93 +152,93 @@ Node * delete(List *L, Node *N)
 
 Node * maximum(List *L)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		printf("Can't find maximum from list, list is null.\n\n");
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		printf("Can't find maximum, list is empty.\n\n");
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
-		Node * Dummy;
-		Dummy = L;
+		L = L->next;
+		Node * Temp;
+		Temp = L;
 		while (L != NULL)
 		{
-			if (L->key > Dummy->key)
+			if (L->key > Temp->key)
 			{
-				Dummy = L;
+				Temp = L;
 			}
 			L = L->next;
 		}
-		return Dummy;
+		return Temp;
 	}
 }
 
 Node * minimum(List *L)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		printf("Can't find minimum from list, list is null.\n\n");
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		printf("Can't find minimum, list is empty.\n\n");
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
-		Node * Dummy;
-		Dummy = L;
+		L = L->next;
+		Node * Temp;
+		Temp = L;
 		while (L != NULL)
 		{
-			if (L->key < Dummy->key)
+			if (L->key < Temp->key)
 			{
-				Dummy = L;
+				Temp = L;
 			}
 			L = L->next;
 		}
-		return Dummy;
+		return Temp;
 	}
 }
 
 Node * successor(List *L, Node *N)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
-		int foundmatch = FALSE;
-		Node * Dummy = NULL;
-		Dummy = getNewNode(Dummy, 0);
-		Dummy = maximum(L);
+		L = L->next;
+		int matchfound = FALSE;
+		Node * Temp = NULL;
+		Temp = newNode(Temp, 0);
+		Temp = maximum(L);
 		while (L != NULL)
 		{
-			if ((L->key > N->key) && (L->key < Dummy->key))
+			if ((L->key > N->key) && (L->key < Temp->key))
 			{
-				Dummy = L;
-				foundmatch = TRUE;
+				Temp = L;
+				matchfound = TRUE;
 			}
 			L = L->next;
 		}
-		if (foundmatch == TRUE) // If a successor was found during the search...
+		if (matchfound == TRUE)
 		{
-			return Dummy;
+			return Temp;
 		}
-		else // If no successor was found during the search...
+		else
 		{
 			return NULL;
 		}
@@ -253,37 +247,37 @@ Node * successor(List *L, Node *N)
 
 Node * predecessor(List *L, Node *N)
 {
-	if (L == NULL) // If List doesn't exist...
+	if (L == NULL)
 	{
 		return NULL;
 	}
-	else if (isEmpty(L)) // If List is empty...
+	else if (isEmpty(L))
 	{
 		return NULL;
 	}
 	else
 	{
-		L = L->next; // Move away from sentinel
-		int foundmatch = FALSE;
-		Node * Dummy = NULL;
-		Dummy = getNewNode(Dummy, 0);
-		Dummy = minimum(L);
+		L = L->next;
+		int matchfound = FALSE;
+		Node * Temp = NULL;
+		Temp = newNode(Temp, 0);
+		Temp = minimum(L);
 		while (L != NULL)
 		{
-			if ((L->key < N->key) && (L->key > Dummy->key))
+			if ((L->key < N->key) && (L->key > Temp->key))
 			{
-				Dummy = L;
-				foundmatch = TRUE;
+				Temp = L;
+				matchfound = TRUE;
 			}
 			L = L->next;
 		}
-		if (foundmatch == TRUE) // If a predecessor was found during the search...
+		if (matchfound == TRUE)
 		{
-			return Dummy;
+			return Temp;
 		}
-		else // If no predecessor was found during the search...
+		else
 		{
-			printf("Predecessor not found. Node is minimum. \n\n");
+			printf("Predecessor not found. Node was already minimum. \n\n");
 			return NULL;
 		}
 	}

@@ -2,22 +2,52 @@
 #include <stdlib.h>
 #include "queuearray.h"
 
-Queue_array * getnewQueue(Queue_array *Queue, int size)
+QueueArray * createQueue(QueueArray *Queue, int size)
 {
-	Queue = (Queue_array*)malloc(sizeof(Queue_array));
+	Queue = (QueueArray*)malloc(sizeof(Queue));
 	Queue->size = size;
-	Queue->data = (int*)malloc(sizeof(int) * Queue->size);
 	Queue->front = -1;
 	Queue->rear = -1;
+	Queue->data = (int*)malloc(size * sizeof(int));
 	return Queue;
 }
 
-int enqueue(Queue_array *Queue, int data)
+void printQueue(QueueArray *Queue)
 {
-	if (Queue->rear == Queue->size - 1) // If the queue is full
+	if (Queue == NULL)
 	{
-		printf("Queue is full!\n\n");
-		return FALSE;
+		printf("There is no Queue.\n\n"); // If the Queue doesn't exist...
+		return;
+	}
+	else if (Queue->front == -1) // If the Queue is empty...
+	{
+		printf("The Queue is empty.\n\n");
+		return;
+	}
+	else
+	{
+		printf("The Queue is: ");
+		int i = 0;
+		for (i = 0; i <= Queue->rear; i++)
+		{
+			printf("%d ", Queue->data[i]);
+		}
+		printf("\n\n");
+		return;
+	}
+}
+
+void enQueue(QueueArray *Queue, int data)
+{
+	if (Queue == NULL) // If the Queue doesn't exist...
+	{
+		printf("There is no Queue.\n\n");
+		return;
+	}
+	else if (Queue->rear == Queue->size - 1) // If the Queue is full...
+	{
+		printf("The Queue is full.\n\n");
+		return;
 	}
 	else
 	{
@@ -25,60 +55,41 @@ int enqueue(Queue_array *Queue, int data)
 		{
 			Queue->front = 0;
 		}
-
-		Queue->rear = Queue->rear + 1;
+		Queue->rear++;
 		Queue->data[Queue->rear] = data;
-		printf("Added %d to queue!\n\n", data);
-
 		printQueue(Queue);
-		return TRUE;
+		return;
 	}
 }
 
-int dequeue(Queue_array *Queue)
+int deQueue(QueueArray *Queue)
 {
-	int result, i;
-	if (Queue->front == -1) // If the queue is empty
+	if (Queue == NULL) // If the Queue doesn't exist...
 	{
-		printf("The queue is empty!\n\n");
-		return -999;
+		printf("There is no Queue.\n\n");
+		return -99999;
+	}
+	else if (Queue->front == -1) // If the Queue is empty...
+	{
+		printf("The Queue is empty.\n\n");
+		return -99999;
 	}
 	else
 	{
-		result = Queue->data[0];
-
-		for (i = 0; i < Queue->rear; i++)
+		int i = 0;
+		for (i = 0; i < Queue->rear; i++) // Go through filled parts of Queue
 		{
 			Queue->data[i] = Queue->data[i + 1];
 		}
 
-		Queue->rear = Queue->rear - 1;
+		Queue->rear--;
 
-		if (Queue->rear == -1)
+		if (Queue->rear == -1) // Signal that Queue is empty if Queue becomes empty
 		{
 			Queue->front = -1;
 		}
 
-		printf("Returning %d\n\n", result);
 		printQueue(Queue);
-		return result;
-	}
-}
-
-void printQueue(Queue_array *Queue)
-{
-	if (Queue->front == -1) // If the queue is empty...
-	{
-		printf("The queue is empty!\n\n");
-	}
-	else
-	{
-		printf("The queue: ");
-		int i;
-		for (i = 0; i <= Queue->rear; i++)
-		{
-			printf("%d ", Queue->data[i]);
-		}
-		printf("\n\n");
+		return Queue->data[0];
 	}
 }

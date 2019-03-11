@@ -1,22 +1,23 @@
 #pragma once
-#define _getnewStack_h
-#define _pushStack_h
-#define _popStack_h
-#define _printStack_h
-#define TRUE 1
-#define FALSE 0
 
-typedef struct Stack_array // Node to be used in linked list
+#define _createStack_h
+#define _printStack_h
+#define _pop_h
+#define _push_h
+
+
+typedef struct StackArray
 {
+	int head;
 	int size;
 	int *data;
-	int tracker;
-}Stack_array;
 
-Stack_array * getnewStack(Stack_array *Stack, int size); // Creates new Queue
+}StackArray;
 
-int pushStack(Stack_array *Stack, int data); // Adds data to end to queue. Returns TRUE if successful, FALSE if unsuccessful
+StackArray * createStack(StackArray *Stack, int size); // Creates stack with given size and returns it
 
-int popStack(Stack_array *Stack); // Reads data from start of queue and returns it, returns -999 if queue is empty
+void printStack(StackArray *Stack); // Prints all elements in stack
 
-void printStack(Stack_array *Stack); // Prints out all the values in the stack
+int pop(StackArray *Stack); // Returns top of stack, otherwise returns -99999
+
+void push(StackArray *Stack, int data); // Adds data to top of stack

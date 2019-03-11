@@ -2,75 +2,79 @@
 #include <stdlib.h>
 #include "stackarray.h"
 
-Stack_array * getnewStack(Stack_array *Stack, int size)
+StackArray * createStack(StackArray *Stack, int size)
 {
-	Stack = (Stack_array*)malloc(sizeof(Stack_array));
+	// Allocate memory for, create and return Stack
+	Stack = (StackArray*)malloc(sizeof(Stack));
 	Stack->size = size;
-	Stack->data = (int*)malloc(sizeof(int) * Stack->size);
-	Stack->tracker = -1;
+	Stack->data = (int*)malloc((size) * sizeof(int));
+	Stack->head = -1;
 	return Stack;
 }
 
-int pushStack(Stack_array *Stack, int data)
+void printStack(StackArray *Stack)
 {
-	if (Stack->tracker == -1) // Ensure stack is not marked as empty
+	if (Stack == NULL) // If the Stack doesn't exist...
 	{
-		Stack->tracker = 0;
-		Stack->data[0] = data;
-		printf("%d was added to stack!\n\n", data);
-		printStack(Stack);
-		return TRUE;
+		printf("There is no Stack. \n\n");
+		return;
 	}
-	else if (Stack->tracker == Stack->size - 1) // If the stack is full
+	else if (Stack->head == -1) // If the Stack is empty...
 	{
-		printf("Stack is full!\n\n");
-		return FALSE;
+		printf("The Stack is empty.\n\n");
+		return;
 	}
 	else
 	{
-		Stack->tracker = Stack->tracker + 1;
-		Stack->data[Stack->tracker] = data;
-		printf("%d was added to stack!\n\n", data);
-
-		printStack(Stack);
-		return TRUE;
-	}
-}
-
-int popStack(Stack_array *Stack)
-{
-	int result = 0, i = 0;
-
-	if (Stack->tracker == -1) // If the stack is empty...
-	{
-		printf("Stack is empty!\n\n");
-		return -999;
-	}
-	else
-	{
-		result = Stack->data[Stack->tracker];
-		Stack->tracker = Stack->tracker - 1;
-		printf("Returning %d\n\n", result);
-
-		printStack(Stack);
-		return result;
-	}
-}
-
-void printStack(Stack_array *Stack)
-{
-	if (Stack->tracker == -1) // If the stack is empty...
-	{
-		printf("The stack is empty!\n\n");
-	}
-	else
-	{
-		printf("The stack: ");
-		int i;
-		for (i = 0; i <= Stack->tracker; i++)
+		int i = 0;
+		printf("The Stack is: ");
+		for (i = 0; i <= Stack->head; i++) // Go through filled parts of Stack
 		{
 			printf("%d ", Stack->data[i]);
 		}
 		printf("\n\n");
+		return;
 	}
 }
+
+int pop(StackArray *Stack)
+{
+	if (Stack == NULL)
+	{
+		printf("There is no Stack. \n\n"); // If the Stack doesn't exist...
+		return -99999;
+	}
+	else if (Stack->head == -1) // If the Stack is empty...
+	{
+		printf("The Stack is empty.\n\n");
+		return -99999;
+	}
+	else
+	{
+		Stack->head--;
+		printStack(Stack);
+		return Stack->data[Stack->head + 1];
+	}
+}
+
+void push(StackArray *Stack, int data)
+{
+	if (Stack == NULL)
+	{
+		printf("There is no Stack. \n\n");
+		return;
+	}
+	else if (Stack->head == Stack->size - 1)
+	{
+		printf("The Stack is full. \n\n");
+		return;
+	}
+	else
+	{
+		Stack->head++;
+		Stack->data[Stack->head] = data;
+		printStack(Stack);
+		return;
+	}
+}
+

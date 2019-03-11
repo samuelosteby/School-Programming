@@ -20,6 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lab1.c" />
+    <ClCompile Include="llist.c" />
+    <ClCompile Include="queue.c" />
+    <ClCompile Include="stack.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="llist.h" />
+    <ClInclude Include="queue.h" />
+    <ClInclude Include="stack.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
