@@ -11,28 +11,58 @@ int main()
 
 	// Create binary tree root...
 	Root * TreeRoot = NULL;
-	TreeRoot = getNewRoot(TreeRoot, 1);
+
+	if (isEmpty(TreeRoot))
+	{
+		printf("Tree is empty!\n\n");
+	}
+
+	TreeRoot = getNewRoot(TreeRoot, 10);
 
 	// Fill out rest of tree with nodes...
-	TreeRoot->left = getNewTreeNode(TreeRoot, 2);
-	TreeRoot->left->left = getNewTreeNode(TreeRoot, 4);
-	TreeRoot->left->right = getNewTreeNode(TreeRoot, 5);
-	TreeRoot->right = getNewTreeNode(TreeRoot, 3);
+	TreeNode * Node1 = NULL;
+	TreeNode * Node2 = NULL;
+	TreeNode * Node3 = NULL;
+	TreeNode * Node4 = NULL;
+	TreeNode * Node5 = NULL;
+	
+	Node1 = getNewTreeNode(Node1, 8);
+	Node2 = getNewTreeNode(Node2, 6);
+	Node3 = getNewTreeNode(Node3, 9);
+	Node4 = getNewTreeNode(Node4, 20);
+	Node5 = getNewTreeNode(Node5, 15);
+	
+	
+	insert(TreeRoot, Node1);
+	insert(TreeRoot, Node2);
+	insert(TreeRoot, Node3);
+	insert(TreeRoot, Node4);
+	insert(TreeRoot, Node5);
 
 	// Print out values in binary tree
-	int print = TRUE; // TRUE TO PRINT, FALSE TO NOT PRINT
-
 	printf("The tree traversed inorder: ");
-	traverseTreeInOrder(TreeRoot, print);
+	traverseTreeInOrder(TreeRoot);
 	printf("\n\n");
 
 	printf("The tree traversed preorder: ");
-	traverseTreePreOrder(TreeRoot, print);
+	traverseTreePreOrder(TreeRoot);
 	printf("\n\n");
 
 	printf("The tree traversed postorder: ");
-	traverseTreePostOrder(TreeRoot, print);
+	traverseTreePostOrder(TreeRoot);
 	printf("\n\n");
+
+	// Search for a given node
+	TreeNode * Test = NULL;
+	Test = search(TreeRoot, 9);
+	if (!isEmpty(Test))
+	{
+		printf("Test: %d\n\n", Test->data);
+	}
+	else
+	{
+		printf("No such node exists!\n\n");
+	}
 
 	system("pause");
 }
