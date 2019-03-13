@@ -11,7 +11,7 @@
 
 int main()
 {
-	printf("Linked Lists:\n\n");
+	printf("Linked Lists:\n");
 
 	// Create List 1
 	List * List1 = NULL;

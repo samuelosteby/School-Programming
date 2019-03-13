@@ -18,7 +18,7 @@ int main()
 	Iarraylab1->data[2] = 5;
 	Iarraylab1->data[3] = 10;
 	Iarraylab1->data[4] = 8;
-	Iarraylab1->data[5] = 7;
+	
 
 	Intarray * Iarraylab2 = NULL;
 	Iarraylab2 = getnewIntarray(Iarraylab1, 6);
@@ -32,16 +32,6 @@ int main()
 	Intarray * Iarray = NULL;
 	Iarray = getnewIntarray(Iarray, 10);
 	Iarray->data[0] = 9;
-	Iarray->data[1] = 6;
-	Iarray->data[2] = 0;
-	Iarray->data[3] = 7;
-	Iarray->data[4] = 1;
-	Iarray->data[5] = 0;
-	Iarray->data[6] = 0;
-	Iarray->data[7] = 1;
-	Iarray->data[8] = 3;
-	Iarray->data[9] = 9;
-
 	// Sort arrays...
 	printArray(Iarraylab1->data, Iarraylab1->size);
 	printf("Sorting with bubble sort...\n\n");
@@ -61,8 +51,11 @@ int main()
 	printf("\n");
 
 	// Free memory of arrays
+	free(Iarray->data);
 	free(Iarray);
+	free(Iarraylab1->data);
 	free(Iarraylab1);
+	free(Iarraylab2->data);
 	free(Iarraylab2);
 
 	//EXERCISE 2
@@ -114,8 +107,11 @@ int main()
 	printArray(Iarray->data, Iarray->size);
 
 	// Free memory of arrays
+	free(Iarray->data);
 	free(Iarray);
+	free(Iarraylab1->data);
 	free(Iarraylab1);
+	free(Iarraylab2->data);
 	free(Iarraylab2);
 
 	system("pause");
