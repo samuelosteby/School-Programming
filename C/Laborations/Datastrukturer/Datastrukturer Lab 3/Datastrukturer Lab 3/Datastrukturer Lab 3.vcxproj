@@ -116,10 +116,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="binarytree.c" />
+    <ClCompile Include="integerarray.c" />
     <ClCompile Include="Lab3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarytree.h" />
+    <ClInclude Include="integerarray.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

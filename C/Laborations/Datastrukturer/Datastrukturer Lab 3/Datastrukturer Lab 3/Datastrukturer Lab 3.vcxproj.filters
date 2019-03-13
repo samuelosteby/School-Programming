@@ -21,9 +21,15 @@
     <ClCompile Include="binarytree.c">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="integerarray.c">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binarytree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="integerarray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
