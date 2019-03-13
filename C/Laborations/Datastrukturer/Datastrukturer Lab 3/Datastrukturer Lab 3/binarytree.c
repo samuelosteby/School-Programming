@@ -224,7 +224,7 @@ TreeNode * delete(Root *Tree, TreeNode *Node)
 		Tree->data = temp->data;
 
 		// Delete inorder successor 
-		Tree->right = delete(Tree->right, temp->data);
+		Tree->right = delete(Tree->right, temp);
 	}
 	return Tree;
 }
@@ -279,7 +279,7 @@ TreeNode * predecessor(Root *Tree, TreeNode *Node)
 	}
 	else // If the subtree to the left is NULL, start from the root, travel down tree. Right if bigger, left if smaller than root's data
 	{
-		struct node *predecessor = NULL; // Placeholder for predecessor
+		TreeNode *predecessor = NULL; // Placeholder for predecessor
 
 		while (Tree != NULL)
 		{
@@ -297,6 +297,8 @@ TreeNode * predecessor(Root *Tree, TreeNode *Node)
 				return predecessor;
 			}
 		}
+
+		return predecessor;
 	}
 }
 
@@ -349,7 +351,7 @@ TreeNode * successor(Root *Tree, TreeNode *Node)
 	}
 	else // If the subtree to the right is NULL, start from the root, travel down tree. Right if bigger, left if smaller than root's data
 	{
-		struct node *successor = NULL; // Placeholder for successor
+		TreeNode *successor = NULL; // Placeholder for successor
 
 		while (Tree != NULL)
 		{
@@ -367,6 +369,8 @@ TreeNode * successor(Root *Tree, TreeNode *Node)
 				return successor;
 			}
 		}
+
+		return successor;
 	}
 }
 

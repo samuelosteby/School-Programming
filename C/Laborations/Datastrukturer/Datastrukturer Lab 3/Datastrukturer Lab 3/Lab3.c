@@ -57,7 +57,10 @@ int main()
 	printf("The biggest data in the tree is: %d\n\n", maximum(TreeRoot)->data);
 
 	// !!Delete comment marks below to delete node from tree!!
-	//delete(TreeRoot, search(TreeRoot, 99));
+	//delete(TreeRoot, search(TreeRoot, 20));
+	//printf("The tree after deletion: ");
+	//traverseTreeInOrder(TreeRoot);
+	//printf("\n\n");
 
 	// Find successor to node with data 15
 	if (successor(TreeRoot, search(TreeRoot, 15)) != NULL)
