@@ -1,10 +1,9 @@
 By: Samuel Östeby
 
-
 Exercise 3
-Descending order: I would choose merge sort in this situation, but either merge sort or quick sort works well. The only important thing is to not use insertion sort.
+Descending order: I would choose merge sort in this situation. The important thing is to not use insertion sort.
 Insertion sort is incredibly slow in this situation because it'd have to swap and perform an operation every single time as it iterates through the array due to everything
-being "out of place" for it. Merge sort would be great as it always has n log n in both average and worst case time complexity
+being "out of place" for it.
 
 Ascending order: Insertion sort would be the absolute best choice here because the list is pretty much sorted already. Insertion sort would blaze through the list
 without having to do anything unlike the other two alternatives who'd still check through the list and take a significantly longer time. This is one of the insertion sort
@@ -13,9 +12,8 @@ algorithms special cases.
 All elements are the same: I'd pick insertion sort again. It wouldn't do any changes since the list is already sorted, just like in the previous case, and thus just
 leave everything intact and blaze through the list without having to waste any memory or time on it.
 
-Both positive and negative numbers: I'd choose quick sort for this task. Since nothing more about the array is known, quick sort tends to be the fastest for arrays 
-except in just a few edge cases when the array is exceedingly big.
-
+Both positive and negative numbers: I'd choose merge sort for this task. It's good at handling both positive and negative numbers during the sorting and would give much better
+results than algorithms like insertion sort.
 
 Exercise 5
 I decided to test Hampus Tuokkola's implementation of the various sorting algorithms. To test his implementation, I used the functions he had defined in his project

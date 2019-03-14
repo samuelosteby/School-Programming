@@ -1,0 +1,12 @@
+1) The file "Lab1 - Samuel Östeby.c" contains all the algorithms, data structures and code necessary to complete the exercise.
+
+2) To test the implementations, I use various assignments asked in the lab exercise, such as using my linked lists
+to add data, find the smallest number, find the biggest number and finding successors/predecessors and such.
+On top of this, I also use my personal number when it comes to both adding and reading from both a stack array and a queue.
+
+3) Use a compiler capable of handling C code. Visual Studio 2017 does this perfectly. Just add the .c file to it and compile.
+All the tests are done automatically.
+
+4) I have tested the implementation done by Hampus Tuokkola. To test it, I entered the functions he had defined into main()
+and ensured that both the linked list, queue array and stack array were able to have data added to them as well as execute the
+functions without any crashes or other issues. The results were as expected, it handled the functions as per the instructions.

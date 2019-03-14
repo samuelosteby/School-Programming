@@ -1,0 +1,23 @@
+The files that implements the algorithms are:
+* binarytree.c
+* binarytree.h
+* integerarray.c
+* intergerarray.h
+* Lab3.c
+
+Just add them to a project in visual studio 2017 and run it
+
+The tests that have been carried out are:
+Creating a binary root
+creating binary tree nodes
+adding the nodes to the binary tree
+finding maximums, minimums, predecessors, successors, searching, deleteing, implementing integer array struct
+ability to sort array with binary tree
+
+I have tested Eric Vestin's implementation of a binary tree. To test it, I defined my own values for his binary tree and entered them by creating a new binary tree.
+With it, I have tried to both search and delete, which has gone well. There are however bugs. In his already defined trees, Tree 1 and Tree 2, if you enter an already
+existing number of Tree 2 into Tree 1, it will always return the wrong predecessor and successor. This is because his check for whether a node is in the same tree is to
+check whether that node exists in the other tree. It doesn't in his example, so the function guesses right that it's in the wrong tree. If you do enter that number though
+into the other tree, it'll mess up and always return the wrong value. I also think that either, or I, misunderstood the assignment as I was expecting the ability
+to be able to add a set of numbers (say, an array), and with it use the binary tree as a sorting algorithm to print out the values in order. This doesn't exist.
+He does traverse the tree in order which does this, but it's only functional with already existing binary trees, not just a set of numbers.
