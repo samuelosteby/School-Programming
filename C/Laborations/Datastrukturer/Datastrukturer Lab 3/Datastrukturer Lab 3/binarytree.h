@@ -15,6 +15,7 @@
 #define _size_h
 #define _sortArray_h
 #define _freeTree_h
+#define _print_h
 #define TRUE 1
 #define FALSE 0
 
@@ -58,3 +59,5 @@ int depth(Root *Tree); // Calculates the depth of a binary tree and returns the 
 int size(Root *Tree); // Calculates the size of a binary tree and returns the size as an integer
 
 void freeTree(Root *Tree); // Frees the memory of a binary tree
+
+void print(struct Node *tree);

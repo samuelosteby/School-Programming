@@ -38,6 +38,10 @@ int main()
 	Node3 = getNewTreeNode(Node3, 9);
 	Node4 = getNewTreeNode(Node4, 20);
 	Node5 = getNewTreeNode(Node5, 15);
+	print(Node1);
+
+	search(Node1, 1);
+	printf("%d", search(Node1, 1));
 	
 	// Insert nodes into root / Tree
 	insert(TreeRoot, Node1);
@@ -96,6 +100,7 @@ int main()
 	TreeNode * Lab1Node1_3 = NULL;
 	TreeNode * Lab1Node1_4 = NULL;
 	TreeNode * Lab1Node1_5 = NULL;
+
 
 	Lab1Tree1_1 = getNewRoot(Lab1Tree1_1, 3);
 	Lab1Node1_1 = getNewTreeNode(Lab1Node1_1, 1);

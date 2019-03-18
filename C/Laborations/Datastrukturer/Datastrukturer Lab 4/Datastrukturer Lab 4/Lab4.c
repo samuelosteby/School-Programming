@@ -12,16 +12,16 @@ int main()
 	AListGraph *Graph = createGraph(5);
 
 	// Add undirected edges to graph
-	addUndirectedEdge(Graph, 0, 1);
-	addUndirectedEdge(Graph, 0, 4);
-	addUndirectedEdge(Graph, 1, 3);
-	addUndirectedEdge(Graph, 1, 4);
-	addUndirectedEdge(Graph, 2, 3);
-	addUndirectedEdge(Graph, 3, 4);
+	addUndirectedEdge(Graph, 0, 1, 1);
+	addUndirectedEdge(Graph, 0, 4, 1);
+	addUndirectedEdge(Graph, 1, 3, 1);
+	addUndirectedEdge(Graph, 1, 4, 1);
+	addUndirectedEdge(Graph, 2, 3, 1);
+	addUndirectedEdge(Graph, 3, 4, 1);
 
 	// Add directed edges to graph
-	addDirectedEdge(Graph, 0, 2);
-	addDirectedEdge(Graph, 2, 4);
+	addDirectedEdge(Graph, 0, 2, 1);
+	addDirectedEdge(Graph, 2, 4, 1);
 
 	// Print graph
 	printGraph(Graph);
@@ -82,5 +82,7 @@ int main()
 		printf("FALSE\n\n");
 	}
 
+	printf("\n\n\nPathfinding:\n");
+	AListGraph *PathfindingGraph = getPathFindingMap();
 	system("pause");
 }

@@ -420,3 +420,13 @@ void freeTree(Root *Tree)
 		free(Tree);
 	}
 }
+
+void print(struct Node *tree)
+{
+	if (tree != NULL)
+	{
+		print(tree->left);
+		printf("%d ", tree->data);
+		print(tree->right);
+	}
+}
