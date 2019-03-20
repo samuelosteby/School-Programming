@@ -5,6 +5,8 @@
 #define TRUE 1
 #define FALSE 0
 
+// MADE BY: Samuel Östeby
+
 int main()
 {
 	// Create graph with given amount of vertices
@@ -47,28 +49,30 @@ int main()
 	printf("Vertex 2 has outgoing connections to the following vertices: ");
 	printList(Result);
 
+	printf("\n");
+
 	int matchfound = FALSE;
 
 	printf("Checking if vertex 0 and vertex 2 have an edge...\n");
 	printf("The result is: ");
 	if (hasEdge(Graph, 0, 2) == TRUE)
 	{
-		printf("TRUE\n\n");
+		printf("TRUE\n");
 	}
 	else
 	{
-		printf("FALSE\n\n");
+		printf("FALSE\n");
 	}
 
 	printf("Checking if vertex 1 and vertex 2 have an edge...\n");
 	printf("The result is: ");
 	if (hasEdge(Graph, 1, 2) == TRUE)
 	{
-		printf("TRUE\n\n");
+		printf("TRUE\n");
 	}
 	else
 	{
-		printf("FALSE\n\n");
+		printf("FALSE\n");
 	}
 
 	printf("Checking if vertex 3 and vertex 4 have an edge...\n");
@@ -82,7 +86,14 @@ int main()
 		printf("FALSE\n\n");
 	}
 
-	printf("\n\n\nPathfinding:\n");
+	// Pathfinding
+	printf("Pathfinding:\n");
+
+	// Create a new graph equal to the one shown in the exercise instructions
+	printf("Creating new map based on the one in the exercise instructions...\n\n");
 	AListGraph *PathfindingGraph = getPathFindingMap();
+
+	// Use Dijkstra's algorithm to find shortest path and print it
+	dijkstrapathfinding(PathfindingGraph, 0, 50);
 	system("pause");
 }

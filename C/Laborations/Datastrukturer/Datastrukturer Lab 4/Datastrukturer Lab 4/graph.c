@@ -80,15 +80,16 @@ int getNumVertices(AListGraph *Graph)
 int getNumEdges(AListGraph *Graph)
 {
 	int edges = 0;
-	AListNode *Temp = NULL;
 
-	// Goes through each list in the array and counts the amount of jumps between nodes
 	for (int vertices = 0; vertices < Graph->vertices; vertices++)
 	{
-		Temp = Graph->array[vertices].head;
+		AListNode *Temp = Graph->array[vertices].head;
 		while (Temp != NULL)
 		{
-			edges++;
+			if (Temp->dest > vertices) // If the destination vertex is bigger than the current vertex...
+			{
+				edges++; // Add to the amount of edges
+			}
 			Temp = Temp->next;
 		}
 	}
@@ -365,18 +366,17 @@ void printVertexPath(int parent[], int j)
 
 void printVertexData(int distance[], int source, int parent[])
 {
-	int i = 50; // Vertex source
 	printf("Vertex:\t\tDistance from source:\n");
 	//for (int i = 0; i < source; i++)
 	//{
-		printf("%d\t\t\t %d\n", i, distance[i]);
+		printf("%d\t\t\t %d\n", source, distance[source]);
 		printf("Path:\t");
-		printVertexPath(parent, i);
+		printVertexPath(parent, source);
 		printf("\n");
 	//}
 }
 
-void dijkstrapathfinding(AListGraph *Graph, int source)
+void dijkstrapathfinding(AListGraph *Graph, int source, int destination)
 {
 	// Gets number of vertices and the distance value to pick minimum edge
 	int vertex = Graph->vertices;
@@ -431,7 +431,7 @@ void dijkstrapathfinding(AListGraph *Graph, int source)
 	}
 
 	// Print shortest distances
-	printVertexData(distance, vertex, parent);
+	printVertexData(distance, destination, parent);
 }
 
 AListGraph * getPathFindingMap()
@@ -483,6 +483,5 @@ AListGraph * getPathFindingMap()
 		}
 	}
 
-	// Use Dijkstra's algorithm to find shortest path and print it
-	dijkstrapathfinding(Graph, 0);
+	return Graph;
 }

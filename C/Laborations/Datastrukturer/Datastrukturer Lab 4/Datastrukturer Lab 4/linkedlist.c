@@ -54,7 +54,7 @@ void printList(List *L)
 			printf("%d ", L->key);
 			L = L->next;
 		}
-		printf("\n\n");
+		printf("\n");
 		return;
 	}
 }
