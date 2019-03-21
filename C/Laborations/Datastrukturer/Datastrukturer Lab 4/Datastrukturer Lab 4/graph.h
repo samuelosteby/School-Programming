@@ -21,6 +21,8 @@
 #define _printVertexData_h
 #define _dijkstrapathfinding_h
 #define _getPathFindingMap_h
+#define _dijkstrashortestpath_h
+#define _printVertexPaths_h
 
 typedef struct AListNode
 {
@@ -92,8 +94,12 @@ void decreaseKey(MinHeap *MHeap, int vertex, int distance); // Decreases distanc
 
 int isInMinHeap(MinHeap *MHeap, int vertex); // Checks if vertex is in a given Min Heap. Returns TRUE if it is, FALSE otherwise
 
-void printVertexData(int distance[], int source, int parent[]); // Prints out all a vertices distance to source
+void printVertexData(int distance[], int source, int parent[]); // Prints out the entire path of a given vertex to a given source
 
-void dijkstrapathfinding(AListGraph *Graph, int source); // Uses Dijkstra's pathfinding algorithm to find distance from all vertices to a given source
+void dijkstrapathfinding(AListGraph *Graph, int source, int parent); // Uses Dijkstra's pathfinding algorithm to find distance from all vertices to a given source
 
 AListGraph * getPathFindingMap(); // Creates the path finding map needed for exercise 2
+
+void dijkstrashortestpath(AListGraph *Graph, int source); // Uses Dijkstra's pathfinding algorithm to figure out distances from all vertices to a given source
+
+void printVertexPaths(int distance[], int vertices); // Prints out all vertices distance to a source

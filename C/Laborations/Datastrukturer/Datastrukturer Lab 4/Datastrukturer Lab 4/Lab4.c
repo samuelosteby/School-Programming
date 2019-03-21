@@ -95,5 +95,10 @@ int main()
 
 	// Use Dijkstra's algorithm to find shortest path and print it
 	dijkstrapathfinding(PathfindingGraph, 0, 50);
+
+	printf("\nDistances:\n");
+
+	// Use Dijsktra's algorithm to find all distances to given vertex
+	dijkstrashortestpath(PathfindingGraph, 0);
 	system("pause");
 }

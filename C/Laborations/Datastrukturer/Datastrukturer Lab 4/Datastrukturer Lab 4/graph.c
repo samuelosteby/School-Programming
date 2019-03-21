@@ -485,3 +485,74 @@ AListGraph * getPathFindingMap()
 
 	return Graph;
 }
+
+void dijkstrashortestpath(AListGraph *Graph, int source)
+{
+	// Gets number of vertices and the distance value to pick minimum edge
+	int vertex = Graph->vertices;
+	int *distance = (int*)malloc(sizeof(int) * vertex);
+
+	MinHeap * MHeap = getMinHeap(vertex);
+
+	// Sets Min Heap for all vertices and all distances values
+	for (int v = 0; v < vertex; v++)
+	{
+		distance[v] = INT_MAX;
+		MHeap->array[v] = getMinHeapNode(v, distance[v]);
+		MHeap->position[v] = v;
+	}
+
+	// Make distance value of the source vertex to 0 so it gets extracted first
+	MHeap->array[source] = getMinHeapNode(source, distance[source]);
+	MHeap->position[source] = source;
+	distance[source] = 0;
+	decreaseKey(MHeap, source, distance[source]);
+
+	// Sets initial size of Min Heap to equal source vertex
+	MHeap->size = vertex;
+
+	// Finilize all distances to all nodes...
+	while (!minHeapEmpty(MHeap))
+	{
+		// Extract vertex with minimum distance
+		MinHeapNode *MHeapNode = extractMinHeap(MHeap);
+		int extract = MHeapNode->vertex;
+
+		// Traverse all neighbors of the extracted vertex and update their distance
+		AListNode * Temp = Graph->array[extract].head;
+		while (Temp != NULL)
+		{
+			int v = Temp->dest;
+
+			// If shortest distance is not finilized and the distance is less than calculated...
+			if ((isInMinHeap(MHeap, v)) && (distance[extract] != INT_MAX) && (Temp->weight + distance[extract] < distance[v]))
+			{
+				distance[v] = distance[extract] + Temp->weight;
+
+				// Update distance in Min Heap
+				decreaseKey(MHeap, v, distance[v]);
+			}
+
+			Temp = Temp->next;
+		}
+	}
+
+	// Print shortest distances
+	printf("Vertex:\t\tDistance from vertex %d:\n", source);
+	printVertexPaths(distance, vertex);
+}
+
+void printVertexPaths(int distance[], int vertices)
+{
+	for (int i = 0; i < vertices; i++)
+	{
+		if (distance[i] == INT_MAX)
+		{
+			printf("%d \t\t NO PATH\n", i);
+		}
+		else
+		{
+			printf("%d \t\t %d\n", i, distance[i]);
+		}
+	}
+}
