@@ -81,7 +81,7 @@ void addUndirectedEdge(AListGraph *Graph, int src, int dest, int weight); // Add
 
 void addDirectedEdge(AListGraph *Graph, int src, int dest, int weight); // Add a directed edge to graph between source and destination
 
-void printGraph(AListGraph *Graph); // Print the adjaceny list graph
+void printGraph(AListGraph *Graph); // Print an adjaceny list graph
 
 int getNumVertices(AListGraph *Graph); // Returns the amount of vertices in a given adjaceny list graph
 
@@ -95,35 +95,35 @@ List * getOutNeighbors(AListGraph *Graph, int vertex); // Returns a list of all 
 
 int hasEdge(AListGraph *Graph, int vertex1, int vertex2); // Returns TRUE if there's an edge between the two vertices, otherwise returns FALSE
 
-MinHeapNode * getMinHeapNode(int vertex, int distance); // Creates and returns a Min Heap Node
+MinHeapNode * getMinHeapNode(int vertex, int distance); // Creates and returns a min heap node
 
-MinHeap * getMinHeap(int capacity); // Creates new Min Heap with a given capacity and returns it
+MinHeap * getMinHeap(int capacity); // Creates new min heap with a given capacity and returns it
 
-void swapMinHeapNode(MinHeapNode **x, MinHeapNode **y); // Swaps the position of two Min Heap Nodes
+void swapMinHeapNode(MinHeapNode **x, MinHeapNode **y); // Swaps the position of two min heap nodes
 
 void minHeapTransform(MinHeap *MHeap, int vertex); // Transforms/Heapifies a given vertex and update position of nodes when they are swapped
 
-int minHeapEmpty(MinHeap * MHeap); // Checks if a Min Heap is empty of not. Returns TRUE if it is, FALSE otherwise
+int minHeapEmpty(MinHeap * MHeap); // Checks if a min heap is empty of not. Returns TRUE if it is, FALSE otherwise
 
-MinHeapNode * extractMinHeap(MinHeap *MHeap); // Extracts the minimum Node from a Heap and returns it. Returns NULL if Heap is empty
+MinHeapNode * extractMinHeap(MinHeap *MHeap); // Extracts the minimum node from a heap and returns it. Returns NULL if heap is empty
 
-void decreaseKey(MinHeap *MHeap, int vertex, int distance); // Decreases distance value of Vertex and finds current index of Node in Min Heap
+void decreaseKey(MinHeap *MHeap, int vertex, int distance); // Decreases distance value of vertex and finds current index of node in min heap
 
-int isInMinHeap(MinHeap *MHeap, int vertex); // Checks if vertex is in a given Min Heap. Returns TRUE if it is, FALSE otherwise
+int isInMinHeap(MinHeap *MHeap, int vertex); // Checks if vertex is in a given min heap. Returns TRUE if it is, FALSE otherwise
 
 void printVertexData(int distance[], int source, int parent[]); // Prints out the entire path of a given vertex to a given source
 
-void dijkstrapathfinding(AListGraph *Graph, int source, int parent); // Uses Dijkstra's pathfinding algorithm to find distance from all vertices to a given source
+void dijkstrapathfinding(AListGraph *Graph, int source, int destination); // Uses Dijkstra's pathfinding algorithm to find shortest path from a source to a given vertex
 
 AListGraph * getPathFindingMap(); // Creates the path finding map needed for exercise 2 and returns it
 
 void dijkstrashortestpath(AListGraph *Graph, int source); // Uses Dijkstra's pathfinding algorithm to figure out distances from all vertices to a given source
 
-void printVertexPaths(int distance[], int vertices); // Prints out all vertices distance to a source
+void printVertexPaths(int distance[], int vertices); // Prints out all vertices distance to a source. If the distance is the maximum value of an integer, there's no path
 
 void depthFirstSearch(AListGraph *Graph, int vertex, int visited[]); // Recursively prints a Depth First Search starting from a given vertex
 
-AListGraph * transposeGraph(AListGraph *Graph); // Creates a transposed version of a given graph and returns it
+AListGraph * transposeGraph(AListGraph *Graph); // Creates a transposed version (all edges flipped) of a given graph and returns it
 
 GraphStack * createGraphStack(int capacity); // Create and return new stack to be used for DFS
 
@@ -133,6 +133,6 @@ void pushGraphStack(GraphStack *Stack, int data); // Pushes a given data into a 
 
 int popGraphStack(GraphStack *Stack); // Pops a stack and returns the data
 
-void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack); // Process all nearby vertices adjacent to a given vertex and push the vertex to stack
+void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack); // Fills a stack with vertices from a graph based on finishing time
 
 void printStronglyCC(AListGraph *Graph); // Prints out all strongly connected components in a given graph

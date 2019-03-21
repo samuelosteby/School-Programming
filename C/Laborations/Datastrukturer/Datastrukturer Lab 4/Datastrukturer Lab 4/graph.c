@@ -536,12 +536,13 @@ void dijkstrashortestpath(AListGraph *Graph, int source)
 	}
 
 	// Print shortest distances
-	printf("Vertex:\t\tDistance from vertex %d:\n", source);
+	printf("Vertex:\t\tDistance from vertex %d to vertex:\n", source);
 	printVertexPaths(distance, vertex);
 }
 
 void printVertexPaths(int distance[], int vertices)
 {
+	// Check whether the distance is the maximum of an integer. If it is, there's no path, otherwise print it
 	for (int i = 0; i < vertices; i++)
 	{
 		if (distance[i] == INT_MAX)
@@ -579,27 +580,29 @@ AListGraph * transposeGraph(AListGraph *Graph)
 	AListNode * TempNode2 = NULL;
 	int foundundirected = FALSE;
 	
+	// Loop through all of a vertex's connection. If a connection is found, check whether it's a directed or an undirected edge
+	// Connect the edge in reverse in the reverse graph if it's a directed one found
 	for (int i = 0; i < Graph->vertices; i++)
 	{
 		TempNode = Graph->array[i].head;
 		while (TempNode != NULL)
 		{
 			foundundirected = FALSE;
-				TempNode2 = Graph->array[TempNode->dest].head;
-				while (TempNode2 != NULL)
+			TempNode2 = Graph->array[TempNode->dest].head;
+			while (TempNode2 != NULL)
+			{
+				if (TempNode2->dest == i) // If the edge is an undirected edge because it's found on the other vertex too...
 				{
-					if (TempNode2->dest == i)
-					{
-						addUndirectedEdge(Temp, i, TempNode->dest, 1);
-						foundundirected = TRUE;
-					}
-					TempNode2 = TempNode2->next;
+					addUndirectedEdge(Temp, i, TempNode->dest, 1);
+					foundundirected = TRUE;
 				}
+				TempNode2 = TempNode2->next;
+			}
 
-				if (foundundirected == FALSE)
-				{
-					addDirectedEdge(Temp, TempNode->dest, i, 1);
-				}
+			if (foundundirected == FALSE) // If the edge isn't undirected, add a reversed edge to second graph
+			{
+				addDirectedEdge(Temp, TempNode->dest, i, 1);
+			}
 			TempNode = TempNode->next;
 		}
 	}
@@ -630,7 +633,7 @@ int IsEmptyStack(GraphStack *Stack)
 
 void pushGraphStack(GraphStack *Stack, int data)
 {
-	if (Stack->tracker == Stack->capacity)
+	if (Stack->tracker == Stack->capacity) // If the stack is full...
 	{
 		printf("Stack is full!\n");
 		return;
@@ -653,6 +656,7 @@ void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack)
 
 	AListNode * Temp = Graph->array[vertex].head;
 
+	// Recursively fill stack with vertices
 	while (Temp != NULL)
 	{
 		if (visited[Temp->dest] == FALSE)
@@ -662,6 +666,7 @@ void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack)
 		Temp = Temp->next;
 	}
 	
+	// Push the given vertex into the stack
 	pushGraphStack(Stack, vertex);
 }
 
@@ -672,11 +677,13 @@ void printStronglyCC(AListGraph *Graph)
 	int *visited = (int*)malloc(sizeof(int) * Graph->vertices);
 	int i = 0;
 
+	// Mark all vertices as unvisited for the first depth first search
 	for (i = 0; i < Graph->vertices; i++)
 	{
 		visited[i] = FALSE;
 	}
 
+	// Fill the stack with vertices according to their finishing times
 	for (i = 0; i < Graph->vertices; i++)
 	{
 		if (visited[i] == FALSE)
@@ -685,13 +692,16 @@ void printStronglyCC(AListGraph *Graph)
 		}
 	}
 
+	// Create a transposed version of the graph
 	AListGraph * Reverse = transposeGraph(Graph);
 
+	// Mark all vertices as unvisited for the second depth first search
 	for (i = 0; i < Graph->vertices; i++)
 	{
 		visited[i] = FALSE;
 	}
 
+	// Go through all vertices in the stack order and print the SSC of the popped vertex
 	while (IsEmptyStack(Stack) == FALSE)
 	{
 		int vertex = popGraphStack(Stack);

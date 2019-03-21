@@ -9,6 +9,10 @@
 
 int main()
 {
+	// EXERCISE 1
+	// Graph functions
+	printf("Exercise 1:\n");
+
 	// Create graph with given amount of vertices
 	int vertices = 5;
 	AListGraph *Graph = createGraph(5);
@@ -24,7 +28,6 @@ int main()
 	// Add directed edges to graph
 	addDirectedEdge(Graph, 0, 2, 1);
 	addDirectedEdge(Graph, 2, 4, 1);
-	addDirectedEdge(Graph, 2, 1, 1);
 
 	// Print graph
 	printGraph(Graph);
@@ -51,8 +54,6 @@ int main()
 	printList(Result);
 
 	printf("\n");
-
-	int matchfound = FALSE;
 
 	printf("Checking if vertex 0 and vertex 2 have an edge...\n");
 	printf("The result is: ");
@@ -87,21 +88,28 @@ int main()
 		printf("FALSE\n\n");
 	}
 
+	printf("\n");
+
+
+	// EXERCISE 2
 	// Pathfinding
-	printf("Pathfinding:\n");
+	printf("Exercise 2:\n");
 
 	// Create a new graph equal to the one shown in the exercise instructions
 	printf("Creating new map based on the one in the exercise instructions...\n\n");
 	AListGraph *PathfindingGraph = getPathFindingMap();
 
-	// Use Dijkstra's algorithm to find shortest path and print it
+	// Use Dijkstra's algorithm to find shortest path from node 0 to node 50 (1,1 to 6,1)
 	dijkstrapathfinding(PathfindingGraph, 0, 50);
+	printf("\n\n");
 
-	printf("\nDistances:\n");
 
-	// Use Dijsktra's algorithm to find all distances to given vertex
-	dijkstrashortestpath(PathfindingGraph, 0);
+	// EXERCISE 3
+	// Strongly connected components
+	printf("Exercise 3:\n");
+	printf("Strongly connected components in TestGraph: \n");
 
+	// Create the TestGraph
 	AListGraph *TestGraph = createGraph(5);
 	addDirectedEdge(TestGraph, 1, 0, 1);
 	addDirectedEdge(TestGraph, 0, 2, 1);
@@ -109,7 +117,34 @@ int main()
 	addDirectedEdge(TestGraph, 0, 3, 1);
 	addDirectedEdge(TestGraph, 3, 4, 1);
 
+	// Print strongly connected components from TestGraph
 	printStronglyCC(TestGraph);
+	printf("\n");
+	printf("SCC in TestGraph2: \n");
 
+	AListGraph *TestGraph2 = createGraph(8);
+	addDirectedEdge(TestGraph2, 0, 1, 1);
+	addDirectedEdge(TestGraph2, 1, 2, 1);
+	addDirectedEdge(TestGraph2, 2, 0, 1);
+	addDirectedEdge(TestGraph2, 2, 3, 1);
+	addDirectedEdge(TestGraph2, 3, 4, 1);
+	addDirectedEdge(TestGraph2, 4, 5, 1);
+	addDirectedEdge(TestGraph2, 5, 3, 1);
+	addUndirectedEdge(TestGraph2, 6, 7, 1);
+	printStronglyCC(TestGraph2);
+
+	printf("\n\n");
+
+
+	// EXERCISE 4
+	// Use Dijsktra's algorithm to find all distances to given vertex
+	printf("Exercise 4:\n");
+	printf("\nDistances in PathfindingGraph:\n");
+	dijkstrashortestpath(PathfindingGraph, 0);
+
+	printf("\nDistances in TestGraph2:\n");
+	dijkstrashortestpath(TestGraph2, 5);
+
+	printf("\n");
 	system("pause");
 }
