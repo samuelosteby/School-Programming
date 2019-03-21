@@ -114,7 +114,6 @@ int main()
 	// Strongly connected components
 	printf("Exercise 3:\n");
 
-	printf("Strongly connected components in TestGraph: \n");
 	// Create the TestGraph
 	AListGraph *TestGraph = createGraph(5);
 	addDirectedEdge(TestGraph, 1, 0, 1);
@@ -123,11 +122,15 @@ int main()
 	addDirectedEdge(TestGraph, 0, 3, 1);
 	addDirectedEdge(TestGraph, 3, 4, 1);
 
+	printf("TestGraph:\n");
+	printGraph(TestGraph);
+	printf("\n");
+
 	// Print strongly connected components from TestGraph
+	printf("Strongly connected components in TestGraph: \n");
 	printStronglyCC(TestGraph);
 	printf("\n");
 
-	printf("SCC in TestGraph2: \n");
 	// Create the TestGraph2
 	AListGraph *TestGraph2 = createGraph(8);
 	addDirectedEdge(TestGraph2, 0, 1, 1);
@@ -139,9 +142,13 @@ int main()
 	addDirectedEdge(TestGraph2, 5, 3, 1);
 	addUndirectedEdge(TestGraph2, 6, 7, 1);
 
-	// Print strongly connected components from TestGraph2
-	printStronglyCC(TestGraph2);
+	printf("TestGraph2:\n");
+	printGraph(TestGraph2);
+	printf("\n");
 
+	// Print strongly connected components from TestGraph2
+	printf("Strongly connected components in TestGraph2: \n");
+	printStronglyCC(TestGraph2);
 	printf("\n\n");
 
 
