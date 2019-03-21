@@ -560,12 +560,15 @@ void depthFirstSearch(AListGraph *Graph, int vertex, int visited[])
 	visited[vertex] = TRUE;
 	printf("%d ", vertex);
 
-	for (int i = vertex; i < Graph->vertices; i++)
+	AListNode * Temp = Graph->array[vertex].head;
+
+	while (Temp != NULL)
 	{
-		if (visited[i] == FALSE)
+		if (visited[Temp->dest] == FALSE)
 		{
-			depthFirstSearch(Graph, i, visited);
+			depthFirstSearch(Graph, Temp->dest, visited);
 		}
+		Temp = Temp->next;
 	}
 }
 
@@ -648,12 +651,15 @@ void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack)
 {
 	visited[vertex] = TRUE;
 
-	for (int i = vertex; i < Graph->vertices; i++)
+	AListNode * Temp = Graph->array[vertex].head;
+
+	while (Temp != NULL)
 	{
-		if (visited[vertex] == FALSE)
+		if (visited[Temp->dest] == FALSE)
 		{
-			fillOrder(Graph, vertex, visited, Stack);
+			fillOrder(Graph, Temp->dest, visited, Stack);
 		}
+		Temp = Temp->next;
 	}
 	
 	pushGraphStack(Stack, vertex);
@@ -688,8 +694,7 @@ void printStronglyCC(AListGraph *Graph)
 
 	while (IsEmptyStack(Stack) == FALSE)
 	{
-		int vertex = Stack->array[Stack->tracker];
-		popGraphStack(Stack);
+		int vertex = popGraphStack(Stack);
 
 		if (visited[vertex] == FALSE)
 		{
