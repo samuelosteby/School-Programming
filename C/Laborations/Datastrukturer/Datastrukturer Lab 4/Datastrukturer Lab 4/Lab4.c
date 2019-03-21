@@ -40,21 +40,25 @@ int main()
 	// Print amount of edges in graph
 	printf("The graph has %d edges\n\n", getNumEdges(Graph));
 
+	// Print out connected vertices
 	List * Result = NULL;
 	Result = getNeighbors(Graph, 2);
 	printf("Vertex 2 has the following vertices connected to it: ");
 	printList(Result);
 
+	// Print out vertices with ingoing connections
 	Result = getInNeighbors(Graph, 2);
 	printf("Vertex 2 ingoing connections from the following vertices: ");
 	printList(Result);
 
+	// Print out vertices with outgoing connections
 	Result = getOutNeighbors(Graph, 2);
 	printf("Vertex 2 has outgoing connections to the following vertices: ");
 	printList(Result);
 
 	printf("\n");
 
+	// Check whether there's an edge between vertex 0 and vertex 2
 	printf("Checking if vertex 0 and vertex 2 have an edge...\n");
 	printf("The result is: ");
 	if (hasEdge(Graph, 0, 2) == TRUE)
@@ -66,6 +70,7 @@ int main()
 		printf("FALSE\n");
 	}
 
+	// Check whether there's an edge between vertex 1 and vertex 2
 	printf("Checking if vertex 1 and vertex 2 have an edge...\n");
 	printf("The result is: ");
 	if (hasEdge(Graph, 1, 2) == TRUE)
@@ -77,6 +82,7 @@ int main()
 		printf("FALSE\n");
 	}
 
+	// Check whether there's an edge between vertex 3 and vertex 4
 	printf("Checking if vertex 3 and vertex 4 have an edge...\n");
 	printf("The result is: ");
 	if (hasEdge(Graph, 3, 4) == TRUE)
