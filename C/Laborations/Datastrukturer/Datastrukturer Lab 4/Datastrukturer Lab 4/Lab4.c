@@ -24,6 +24,7 @@ int main()
 	// Add directed edges to graph
 	addDirectedEdge(Graph, 0, 2, 1);
 	addDirectedEdge(Graph, 2, 4, 1);
+	addDirectedEdge(Graph, 2, 1, 1);
 
 	// Print graph
 	printGraph(Graph);
@@ -100,5 +101,15 @@ int main()
 
 	// Use Dijsktra's algorithm to find all distances to given vertex
 	dijkstrashortestpath(PathfindingGraph, 0);
+
+	AListGraph *TestGraph = createGraph(5);
+	addDirectedEdge(TestGraph, 1, 0, 1);
+	addDirectedEdge(TestGraph, 0, 2, 1);
+	addDirectedEdge(TestGraph, 2, 1, 1);
+	addDirectedEdge(TestGraph, 0, 3, 1);
+	addDirectedEdge(TestGraph, 3, 4, 1);
+
+	printStronglyCC(TestGraph);
+
 	system("pause");
 }

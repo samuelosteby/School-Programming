@@ -23,6 +23,14 @@
 #define _getPathFindingMap_h
 #define _dijkstrashortestpath_h
 #define _printVertexPaths_h
+#define _depthFirstSearch_h
+#define _transposeGraph_h
+#define _createGraphStack_h
+#define _IsEmptyStack_h
+#define _pushGraphStack_h
+#define _popGraphStack_h
+#define _fillOrder_h
+#define _printStronglyCC_h
 
 typedef struct AListNode
 {
@@ -39,6 +47,7 @@ typedef struct AList
 typedef struct AListGraph
 {
 	int vertices;
+	int edges;
 	AList * array;
 }AListGraph;
 
@@ -55,6 +64,14 @@ typedef struct MinHeap
 	int *position;
 	MinHeapNode **array;
 }MinHeap;
+
+typedef struct GraphStack
+{
+	int data;
+	int capacity;
+	int tracker;
+	int *array;
+}GraphStack;
 
 AListNode * getNewAListNode(int dest, int weight); // Creates new adjaceny list node and returns it
 
@@ -98,8 +115,24 @@ void printVertexData(int distance[], int source, int parent[]); // Prints out th
 
 void dijkstrapathfinding(AListGraph *Graph, int source, int parent); // Uses Dijkstra's pathfinding algorithm to find distance from all vertices to a given source
 
-AListGraph * getPathFindingMap(); // Creates the path finding map needed for exercise 2
+AListGraph * getPathFindingMap(); // Creates the path finding map needed for exercise 2 and returns it
 
 void dijkstrashortestpath(AListGraph *Graph, int source); // Uses Dijkstra's pathfinding algorithm to figure out distances from all vertices to a given source
 
 void printVertexPaths(int distance[], int vertices); // Prints out all vertices distance to a source
+
+void depthFirstSearch(AListGraph *Graph, int vertex, int visited[]); // Recursively prints a Depth First Search starting from a given vertex
+
+AListGraph * transposeGraph(AListGraph *Graph); // Creates a transposed version of a given graph and returns it
+
+GraphStack * createGraphStack(int capacity); // Create and return new stack to be used for DFS
+
+int IsEmptyStack(GraphStack *Stack); // Returns TRUE if stack if empty, FALSE otherwise
+
+void pushGraphStack(GraphStack *Stack, int data); // Pushes a given data into a given stack
+
+int popGraphStack(GraphStack *Stack); // Pops a stack and returns the data
+
+void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack); // Process all nearby vertices adjacent to a given vertex and push the vertex to stack
+
+void printStronglyCC(AListGraph *Graph); // Prints out all strongly connected components in a given graph

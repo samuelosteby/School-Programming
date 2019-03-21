@@ -24,6 +24,9 @@ AListGraph * createGraph(int vertices)
 	// Allocate memory for array based on amount of vertices
 	Graph->array = (AList*)malloc(Graph->vertices * sizeof(AList));
 
+	// Make amount of edges in graph to 0
+	Graph->edges = 0;
+
 	// Initialize every adjaceny list with head as NULL
 	for (int i = 0; i < Graph->vertices; i++)
 	{
@@ -35,23 +38,35 @@ AListGraph * createGraph(int vertices)
 
 void addUndirectedEdge(AListGraph *Graph, int src, int dest, int weight)
 {
-	// Add an edge from the source to the destination
-	AListNode * NewNode = getNewAListNode(dest, weight);
-	NewNode->next = Graph->array[src].head;
-	Graph->array[src].head = NewNode;
+	int canaddedge = 0;
 
-	// Add an edge from the destination to the source, to make it undirected
-	NewNode = getNewAListNode(src, weight);
-	NewNode->next = Graph->array[dest].head;
-	Graph->array[dest].head = NewNode;
+	if ((hasEdge(Graph, src, dest) == FALSE))
+	{
+		// Add an edge from the source to the destination
+		AListNode * NewNode = getNewAListNode(dest, weight);
+		NewNode->next = Graph->array[src].head;
+		Graph->array[src].head = NewNode;
+
+		// Add an edge from the destination to the source, to make it undirected
+		NewNode = getNewAListNode(src, weight);
+		NewNode->next = Graph->array[dest].head;
+		Graph->array[dest].head = NewNode;
+
+		Graph->edges++;
+	}
 }
 
 void addDirectedEdge(AListGraph *Graph, int src, int dest, int weight)
 {
-	// Add an edge from the source to the destination
-	AListNode * NewNode = getNewAListNode(dest, weight);
-	NewNode->next = Graph->array[src].head;
-	Graph->array[src].head = NewNode;
+	if ((hasEdge(Graph, src, dest) == FALSE))
+	{
+		// Add an edge from the source to the destination
+		AListNode * NewNode = getNewAListNode(dest, weight);
+		NewNode->next = Graph->array[src].head;
+		Graph->array[src].head = NewNode;
+
+		Graph->edges++;
+	}
 }
 
 void printGraph(AListGraph *Graph)
@@ -79,22 +94,8 @@ int getNumVertices(AListGraph *Graph)
 
 int getNumEdges(AListGraph *Graph)
 {
-	int edges = 0;
 
-	for (int vertices = 0; vertices < Graph->vertices; vertices++)
-	{
-		AListNode *Temp = Graph->array[vertices].head;
-		while (Temp != NULL)
-		{
-			if (Temp->dest > vertices) // If the destination vertex is bigger than the current vertex...
-			{
-				edges++; // Add to the amount of edges
-			}
-			Temp = Temp->next;
-		}
-	}
-
-	return edges;
+	return Graph->edges;
 }
 
 List * getNeighbors(AListGraph *Graph, int vertex)
@@ -367,13 +368,10 @@ void printVertexPath(int parent[], int j)
 void printVertexData(int distance[], int source, int parent[])
 {
 	printf("Vertex:\t\tDistance from source:\n");
-	//for (int i = 0; i < source; i++)
-	//{
 		printf("%d\t\t\t %d\n", source, distance[source]);
 		printf("Path:\t");
 		printVertexPath(parent, source);
 		printf("\n");
-	//}
 }
 
 void dijkstrapathfinding(AListGraph *Graph, int source, int destination)
@@ -553,6 +551,150 @@ void printVertexPaths(int distance[], int vertices)
 		else
 		{
 			printf("%d \t\t %d\n", i, distance[i]);
+		}
+	}
+}
+
+void depthFirstSearch(AListGraph *Graph, int vertex, int visited[])
+{
+	visited[vertex] = TRUE;
+	printf("%d ", vertex);
+
+	for (int i = vertex; i < Graph->vertices; i++)
+	{
+		if (visited[i] == FALSE)
+		{
+			depthFirstSearch(Graph, i, visited);
+		}
+	}
+}
+
+AListGraph * transposeGraph(AListGraph *Graph)
+{
+	AListGraph * Temp = createGraph(Graph->vertices);
+	AListNode * TempNode = NULL;
+	AListNode * TempNode2 = NULL;
+	int foundundirected = FALSE;
+	
+	for (int i = 0; i < Graph->vertices; i++)
+	{
+		TempNode = Graph->array[i].head;
+		while (TempNode != NULL)
+		{
+			foundundirected = FALSE;
+				TempNode2 = Graph->array[TempNode->dest].head;
+				while (TempNode2 != NULL)
+				{
+					if (TempNode2->dest == i)
+					{
+						addUndirectedEdge(Temp, i, TempNode->dest, 1);
+						foundundirected = TRUE;
+					}
+					TempNode2 = TempNode2->next;
+				}
+
+				if (foundundirected == FALSE)
+				{
+					addDirectedEdge(Temp, TempNode->dest, i, 1);
+				}
+			TempNode = TempNode->next;
+		}
+	}
+
+	return Temp;
+}
+
+GraphStack * createGraphStack(int capacity)
+{
+	GraphStack * Stack = (GraphStack*)malloc(sizeof(GraphStack));
+	Stack->capacity = capacity;
+	Stack->array = (int*)malloc(sizeof(int) * Stack->capacity);
+	Stack->tracker = -1;
+	return Stack;
+}
+
+int IsEmptyStack(GraphStack *Stack)
+{
+	if (Stack->tracker == -1)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+void pushGraphStack(GraphStack *Stack, int data)
+{
+	if (Stack->tracker == Stack->capacity)
+	{
+		printf("Stack is full!\n");
+		return;
+	}
+
+	Stack->tracker++;
+	Stack->array[Stack->tracker] = data;
+}
+
+int popGraphStack(GraphStack *Stack)
+{
+	int temp = Stack->array[Stack->tracker];
+	Stack->tracker--;
+	return temp;
+}
+
+void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack)
+{
+	visited[vertex] = TRUE;
+
+	for (int i = vertex; i < Graph->vertices; i++)
+	{
+		if (visited[vertex] == FALSE)
+		{
+			fillOrder(Graph, vertex, visited, Stack);
+		}
+	}
+	
+	pushGraphStack(Stack, vertex);
+}
+
+void printStronglyCC(AListGraph *Graph)
+{
+	GraphStack * Stack = createGraphStack(Graph->vertices);
+
+	int *visited = (int*)malloc(sizeof(int) * Graph->vertices);
+	int i = 0;
+
+	for (i = 0; i < Graph->vertices; i++)
+	{
+		visited[i] = FALSE;
+	}
+
+	for (i = 0; i < Graph->vertices; i++)
+	{
+		if (visited[i] == FALSE)
+		{
+			fillOrder(Graph, i, visited, Stack);
+		}
+	}
+
+	AListGraph * Reverse = transposeGraph(Graph);
+
+	for (i = 0; i < Graph->vertices; i++)
+	{
+		visited[i] = FALSE;
+	}
+
+	while (IsEmptyStack(Stack) == FALSE)
+	{
+		int vertex = Stack->array[Stack->tracker];
+		popGraphStack(Stack);
+
+		if (visited[vertex] == FALSE)
+		{
+			depthFirstSearch(Reverse, vertex, visited);
+			printf("\n");
 		}
 	}
 }
