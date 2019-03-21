@@ -603,6 +603,7 @@ AListGraph * transposeGraph(AListGraph *Graph)
 			{
 				addDirectedEdge(Temp, TempNode->dest, i, 1);
 			}
+
 			TempNode = TempNode->next;
 		}
 	}
@@ -645,9 +646,8 @@ void pushGraphStack(GraphStack *Stack, int data)
 
 int popGraphStack(GraphStack *Stack)
 {
-	int temp = Stack->array[Stack->tracker];
 	Stack->tracker--;
-	return temp;
+	return Stack->array[Stack->tracker + 1];
 }
 
 void fillOrder(AListGraph *Graph, int vertex, int visited[], GraphStack *Stack)
