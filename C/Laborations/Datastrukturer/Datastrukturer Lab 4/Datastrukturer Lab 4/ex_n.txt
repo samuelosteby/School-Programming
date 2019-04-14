@@ -1,0 +1,32 @@
+1) The relevant files are:
+graph.h
+graph.c
+linkedlist.h
+linkedlist.c
+Lab4.c
+
+2) The various test are:
+Creating a graph
+Adding both directed and undirected edges
+Testing whether an edge exists between two vertices
+Testing whether outgoing, ingoing and neighbors exists to a vertex
+Testing out Dijstra's algorithm for pathfinding
+Testing SCC
+
+3) Just put the files into a Visual Studio project and build it. There will be no errors or warnings.
+
+4) Questions asked:
+"Does the algorithm make any assumptions on the input graph?"
+
+The answer is yes. Dijstra's algorithm makes the assumption that there are no
+negative weights or negative cycles in the input graph
+
+
+Testing:
+I've tested Eric Vestin's code. It wouldn't run on my machine, due to reasons which I assume have to do with differences with Windows and Mac. He uses various methods which I can't, like initializing arrays with variables, which I figure works in another standard. Like in this example:
+
+int vertices = getAllVerties(graph), weightarr[vertices]
+
+He's able to, during his initialization, get the amount of vertices in the graph and then use it to determine the amount of elements in his weightarr array. On my computer an operation like that crashes because it wants to know the fixed number as it builds.
+
+Otherwise, though, on his machine it works as expected. I tested creating my own graph and using his various functions on it similar to how I did my own tests in my own lab. I created a graph, created various directed and undirected edges, tested whether they worked properly and SCC could be determined... I tested his shortest past implementation and so on. Everything came out without problems so except that difference it seems to be completely functional.
